@@ -141,7 +141,16 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Pure standalone QR codes — NO boxes, NO borders, NO background, NO text */
+/* Project Links Row with Inline QR Code */
+.project-links-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+/* Pure standalone & inline QR codes — NO boxes, NO borders, NO background, NO text */
 img.standalone-qr {
   width: 140px;
   height: 140px;
@@ -154,10 +163,17 @@ img.standalone-qr {
   display: block;
 }
 
-.project-media img.standalone-qr {
-  width: 120px;
-  height: 120px;
-  margin: 8px 0 0 0;
+img.inline-qr-btn {
+  width: 95px;
+  height: 95px;
+  object-fit: contain;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 @media (max-width: 860px) {
