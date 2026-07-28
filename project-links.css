@@ -96,89 +96,77 @@
   text-transform: lowercase;
 }
 
-/* QR Code Integration Styles */
-.qr-badge-card {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  padding: 12px 18px;
-  border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.qr-badge-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.qr-badge-img {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  border-radius: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.qr-badge-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.qr-badge-info span {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.qr-badge-info strong {
-  font-family: var(--sans);
-  font-size: 0.92rem;
-  color: var(--ink);
-}
-
-.qr-badge-info p {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin: 0;
-}
-
-/* Contact QR Code Card */
-.contact-qr-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 36px;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  max-width: 320px;
+/* Project Media Column (Left side screenshots) */
+.project {
+  display: grid;
+  grid-template-columns: 60px 240px 1fr;
+  gap: 32px;
+  padding: 48px 0;
+  border-bottom: 1px solid var(--line);
+  max-width: 1100px;
   margin-left: auto;
-  margin-right: auto;
+  align-items: start;
 }
 
-.contact-qr-img {
-  width: 160px;
-  height: 160px;
+.project-media {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.project-media img.project-screenshot {
+  width: 100%;
+  max-width: 240px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.project-media img.project-screenshot:hover {
+  transform: scale(1.02);
+}
+
+.project-media .twin-shots {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.project-media .twin-shots img {
+  width: calc(50% - 5px);
+  max-width: 115px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Pure standalone QR codes — NO boxes, NO borders, NO background, NO text */
+img.standalone-qr {
+  width: 140px;
+  height: 140px;
   object-fit: contain;
-  border-radius: 12px;
-  background: var(--white);
-  padding: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 12px auto;
+  display: block;
 }
 
-.contact-qr-box span {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  margin-top: 14px;
+.project-media img.standalone-qr {
+  width: 120px;
+  height: 120px;
+  margin: 8px 0 0 0;
+}
+
+@media (max-width: 860px) {
+  .project {
+    grid-template-columns: 45px 1fr;
+    gap: 20px;
+  }
+  .project-media {
+    grid-column: 2;
+    margin-bottom: 16px;
+  }
 }
