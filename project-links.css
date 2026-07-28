@@ -1,0 +1,184 @@
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .11em;
+  font-size: .64rem;
+  font-weight: 500;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.project-links a:hover,
+.project-links a:focus-visible {
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.project-links span {
+  font-size: .85rem;
+}
+
+.lab-workflow {
+  margin: 30px 0 24px;
+  padding: 24px 26px;
+  border-left: 2px solid var(--accent);
+  background: rgba(255, 255, 255, .36);
+}
+
+.lab-workflow > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.lab-workflow p {
+  margin: 0;
+  color: var(--ink);
+}
+
+.contact-actions {
+  display: flex;
+  justify-content: center;
+  margin: 26px 0 24px;
+}
+
+.contact .linkedin-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: auto;
+  margin: 0;
+  padding: 13px 18px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .7rem;
+  font-weight: 600;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.contact .linkedin-button:hover,
+.contact .linkedin-button:focus-visible {
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.contact .linkedin-button b {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  background: #0a66c2;
+  color: #fff;
+  font-size: .8rem;
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+/* QR Code Integration Styles */
+.qr-badge-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qr-badge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.qr-badge-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.qr-badge-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qr-badge-info span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.qr-badge-info strong {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.qr-badge-info p {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Contact QR Code Card */
+.contact-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 36px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-qr-img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: var(--white);
+  padding: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.contact-qr-box span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-top: 14px;
+}
