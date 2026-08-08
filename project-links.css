@@ -278,12 +278,54 @@ img.inline-qr-btn {
 
 @media (max-width: 860px) {
   .project {
-    grid-template-columns: 45px 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 32px 0;
+  }
+  .project-number {
+    font-size: 1rem;
   }
   .project-media {
-    grid-column: 2;
-    margin-bottom: 16px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .project-media img.project-screenshot {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 6px;
+  }
+  .project-media .twin-shots {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .project-media .twin-shots img {
+    width: calc(50% - 4px);
+    max-width: none;
+    border-radius: 6px;
+  }
+  .project h3 {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+  }
+  .project dl {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding-left: 14px;
+    margin-top: 16px;
+  }
+  .project-links {
+    margin-top: 16px;
+  }
+  .project-links a {
+    padding: 10px 14px;
+    font-size: .6rem;
+  }
+  .project-links-row {
+    margin-top: 16px;
+    gap: 10px;
+  }
+  img.inline-qr-btn {
+    width: 44px !important;
+    height: 44px !important;
   }
 }
 
