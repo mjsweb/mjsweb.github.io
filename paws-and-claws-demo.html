@@ -3,23 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Paws & Claws Luxury Pet Spa — Online Reservation & Instant Estimate</title>
+<title>Paws & Claws Luxury Pet Spa — Full Interactive Application</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23ea580c'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='14'%3E🐶%3C/text%3E%3C/svg%3E">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 :root {
   --primary-orange: #ea580c;
   --primary-hover: #c2410c;
+  --primary-light: #fffaf5;
   --bg-page: #fdfbf7;
   --card-bg: #ffffff;
   --text-dark: #181411;
   --text-muted: #6b7280;
-  --border-light: #e5e7eb;
+  --border-light: #ede8e0;
   --border-gold: #fde68a;
   --accent-gold: #f59e0b;
   --accent-pill: #fef3c7;
-  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 10px;
@@ -27,19 +29,19 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  font-family: var(--font);
-  background: #111614;
+  font-family: var(--font-sans);
+  background: #0d120f;
   color: var(--text-dark);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Top Sandbox Controls Bar ── */
+/* ── Top Demo Sandbox Header ── */
 .demo-topbar {
-  background: #18201c;
+  background: #151c18;
   border-bottom: 1px solid rgba(234, 88, 12, 0.3);
-  padding: 10px 20px;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +56,7 @@ body {
   background: rgba(234, 88, 12, 0.15);
   color: #fb923c;
   border: 1px solid rgba(234, 88, 12, 0.3);
-  padding: 3px 12px;
+  padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.72rem;
   font-weight: 700;
@@ -111,7 +113,7 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 20px 10px 40px;
+  padding: 20px 10px 60px;
   width: 100%;
 }
 
@@ -134,7 +136,7 @@ body {
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 0 10px #242b27;
 }
 
-/* ── App Header ── */
+/* ── App Navbar ── */
 .site-navbar {
   background: #ffffff;
   border-bottom: 1px solid #f0ebe4;
@@ -150,6 +152,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 .brand-icon {
   width: 42px;
@@ -191,11 +194,11 @@ body {
   align-items: center;
   gap: 16px;
 }
-.btn-schedule-nav {
+.btn-nav-action {
   background: #ea580c;
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 12px;
   font-size: 0.78rem;
   font-weight: 700;
@@ -204,9 +207,19 @@ body {
   align-items: center;
   gap: 6px;
   box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
-.btn-schedule-nav:hover { background: #c2410c; }
+.btn-nav-action:hover { background: #c2410c; }
+.btn-nav-action.secondary {
+  background: #faf6f0;
+  color: #44403c;
+  border: 1px solid #e7e0d6;
+  box-shadow: none;
+}
+.btn-nav-action.secondary:hover {
+  background: #f5eedf;
+  color: #ea580c;
+}
 
 .nav-link-item {
   color: #44403c;
@@ -217,8 +230,14 @@ body {
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.2s;
 }
-.nav-link-item:hover { color: #ea580c; }
+.nav-link-item:hover, .nav-link-item.active {
+  color: #ea580c;
+  background: #fffaf5;
+}
 .btn-admin {
   background: #faf6f0;
   border: 1px solid #e7e0d6;
@@ -228,24 +247,44 @@ body {
   font-weight: 700;
   color: #78716c;
   cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-admin:hover, .btn-admin.active {
+  background: #181411;
+  color: #fef3c7;
+  border-color: #181411;
 }
 
 /* Mobile Header overrides */
 .app-wrapper.mobile-mode .nav-links { display: none; }
-.mobile-menu-btn {
+.mobile-nav-bar {
   display: none;
-  background: none;
-  border: none;
-  font-size: 22px;
+  background: #ffffff;
+  border-top: 1px solid #ede8e0;
+  padding: 8px 12px;
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
+  justify-content: space-around;
+}
+.app-wrapper.mobile-mode .mobile-nav-bar { display: flex; }
+.mob-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #78716c;
+  gap: 2px;
   cursor: pointer;
 }
-.app-wrapper.mobile-mode .mobile-menu-btn { display: block; }
+.mob-nav-item.active { color: #ea580c; }
 
-/* ── Sub-header Banner ── */
+/* ── Subheader Notice ── */
 .top-notice-bar {
   background: #fffbeb;
   border-bottom: 1px solid #fef3c7;
-  padding: 8px 20px;
+  padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -256,14 +295,93 @@ body {
   gap: 8px;
 }
 
-/* ── Multi-Step Wizard Container ── */
+/* ── APP VIEWS ARCHITECTURE ── */
+.app-view-container {
+  display: none;
+  animation: fadeInView 0.25s ease;
+}
+.app-view-container.active { display: block; }
+@keyframes fadeInView {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════ VIEW 1: HOME & SPA CATALOG ═══════════ */
+.spa-hero {
+  padding: 40px clamp(16px, 4vw, 40px) 30px;
+  background: linear-gradient(180deg, #ffffff 0%, var(--bg-page) 100%);
+  text-align: center;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.spa-hero h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: #181411;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.spa-hero p {
+  font-size: 0.92rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  line-height: 1.55;
+}
+.hero-cta-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Feature Pillars */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 0 clamp(16px, 4vw, 40px) 36px;
+}
+@media (max-width: 768px) { .pillars-grid { grid-template-columns: 1fr; } }
+.pillar-card {
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+}
+.pillar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fef3c7;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.pillar-card h3 { font-size: 0.95rem; font-weight: 800; color: #181411; margin-bottom: 4px; }
+.pillar-card p { font-size: 0.75rem; color: #78716c; line-height: 1.45; }
+
+/* ═══════════ VIEW 2: 5-STEP SCHEDULING WIZARD ═══════════ */
 .wizard-container {
   padding: 32px clamp(16px, 4vw, 40px);
   max-width: 860px;
   margin: 0 auto;
   width: 100%;
 }
-
 .step-eyebrow {
   font-size: 0.72rem;
   font-weight: 800;
@@ -281,7 +399,7 @@ body {
   gap: 10px;
 }
 .step-title-header h2 {
-  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
   font-weight: 800;
   color: #181411;
   letter-spacing: -0.03em;
@@ -304,7 +422,7 @@ body {
 .steps-indicator {
   display: flex;
   gap: 8px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 .step-tab-bar {
   flex: 1;
@@ -315,12 +433,8 @@ body {
   overflow: hidden;
   cursor: pointer;
 }
-.step-tab-bar.active {
-  background: #ea580c;
-}
-.step-tab-bar.completed {
-  background: #10b981;
-}
+.step-tab-bar.active { background: #ea580c; }
+.step-tab-bar.completed { background: #10b981; }
 .step-labels {
   display: flex;
   justify-content: space-between;
@@ -332,7 +446,6 @@ body {
 .step-labels span.active { color: #ea580c; }
 .step-labels span.completed { color: #10b981; }
 
-/* ── Wizard Form Card ── */
 .form-card {
   background: #ffffff;
   border: 1px solid #ede8e0;
@@ -341,7 +454,6 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   margin-bottom: 24px;
 }
-
 .form-label {
   font-size: 0.72rem;
   font-weight: 800;
@@ -352,7 +464,7 @@ body {
   display: block;
 }
 
-/* Species Cards */
+/* Species */
 .species-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -385,21 +497,9 @@ body {
   font-size: 24px;
   flex-shrink: 0;
 }
-.species-card.active .species-icon {
-  background: #ea580c;
-  color: #fff;
-}
-.species-title {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #1c1917;
-}
-.species-desc {
-  font-size: 0.68rem;
-  color: #78716c;
-  line-height: 1.3;
-  margin-top: 2px;
-}
+.species-card.active .species-icon { background: #ea580c; color: #fff; }
+.species-title { font-size: 0.95rem; font-weight: 800; color: #1c1917; }
+.species-desc { font-size: 0.68rem; color: #78716c; line-height: 1.3; margin-top: 2px; }
 
 /* Inputs */
 .input-row {
@@ -409,27 +509,18 @@ body {
   margin-bottom: 24px;
 }
 @media (max-width: 650px) { .input-row { grid-template-columns: 1fr; } }
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
 .text-input, .select-input {
   width: 100%;
   padding: 14px 16px;
   border-radius: 12px;
   border: 1px solid #d6d3d1;
-  font-family: var(--font);
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: #1c1917;
   background: #fafaf9;
   outline: none;
-  transition: border-color 0.2s, background 0.2s;
 }
-.text-input:focus, .select-input:focus {
-  border-color: #ea580c;
-  background: #ffffff;
-}
+.text-input:focus, .select-input:focus { border-color: #ea580c; background: #ffffff; }
 
 /* Weight Slider */
 .weight-slider-box {
@@ -445,11 +536,7 @@ body {
   align-items: center;
   margin-bottom: 12px;
 }
-.weight-val-badge {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #ea580c;
-}
+.weight-val-badge { font-size: 1.25rem; font-weight: 800; color: #ea580c; }
 .weight-tier-pill {
   font-size: 0.72rem;
   font-weight: 700;
@@ -459,11 +546,7 @@ body {
   border-radius: 20px;
   margin-left: 8px;
 }
-.range-slider {
-  width: 100%;
-  accent-color: #ea580c;
-  cursor: pointer;
-}
+.range-slider { width: 100%; accent-color: #ea580c; cursor: pointer; }
 .range-scale {
   display: flex;
   justify-content: space-between;
@@ -473,7 +556,7 @@ body {
   margin-top: 6px;
 }
 
-/* Condition & Temperament Cards */
+/* Option Grid (Coat & Temperament) */
 .option-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -481,7 +564,6 @@ body {
   margin-bottom: 24px;
 }
 @media (max-width: 700px) { .option-grid { grid-template-columns: 1fr; } }
-
 .option-card {
   background: #ffffff;
   border: 2px solid #ede8e0;
@@ -493,18 +575,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
-.option-card.active {
-  border-color: #ea580c;
-  background: #fffaf5;
-}
-.option-card.active-blue {
-  border-color: #3b82f6;
-  background: #eff6ff;
-}
-.option-card.active-red {
-  border-color: #ef4444;
-  background: #fef2f2;
-}
+.option-card.active { border-color: #ea580c; background: #fffaf5; }
 .option-head {
   display: flex;
   justify-content: space-between;
@@ -520,17 +591,10 @@ body {
   padding: 2px 6px;
   border-radius: 6px;
 }
-.option-fee.extra {
-  color: #b45309;
-  background: #fef3c7;
-}
-.option-desc {
-  font-size: 0.66rem;
-  color: #78716c;
-  line-height: 1.35;
-}
+.option-fee.extra { color: #b45309; background: #fef3c7; }
+.option-desc { font-size: 0.66rem; color: #78716c; line-height: 1.35; }
 
-/* Vaccine Verification Callout */
+/* Vaccine Callout */
 .vaccine-box {
   background: #f0fdf4;
   border: 1px solid #bbf7d0;
@@ -538,31 +602,11 @@ body {
   padding: 16px 20px;
   margin-bottom: 28px;
 }
-.vaccine-head {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #166534;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-.vaccine-text {
-  font-size: 0.72rem;
-  color: #15803d;
-  margin-bottom: 10px;
-}
-.vaccine-checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #14532d;
-  cursor: pointer;
-}
+.vaccine-head { font-size: 0.78rem; font-weight: 800; color: #166534; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.vaccine-text { font-size: 0.72rem; color: #15803d; margin-bottom: 10px; }
+.vaccine-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700; color: #14532d; cursor: pointer; }
 
-/* Wizard Navigation Buttons */
+/* Wizard Footer Buttons */
 .wizard-footer {
   display: flex;
   justify-content: space-between;
@@ -584,10 +628,7 @@ body {
   box-shadow: 0 4px 16px rgba(234, 88, 12, 0.3);
   transition: all 0.2s;
 }
-.btn-next-step:hover {
-  background: #c2410c;
-  transform: translateY(-1px);
-}
+.btn-next-step:hover { background: #c2410c; transform: translateY(-1px); }
 .btn-prev-step {
   background: #faf6f0;
   border: 1px solid #d6d3d1;
@@ -599,18 +640,7 @@ body {
   cursor: pointer;
 }
 
-/* Step Views */
-.wizard-step-view {
-  display: none;
-  animation: fadeIn 0.25s ease;
-}
-.wizard-step-view.active { display: block; }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Service Selection Cards (Step 2) */
+/* Service Card (Step 2) */
 .service-select-card {
   background: #ffffff;
   border: 2px solid #ede8e0;
@@ -624,28 +654,12 @@ body {
   align-items: center;
   gap: 14px;
 }
-.service-select-card.active {
-  border-color: #ea580c;
-  background: #fffaf5;
-}
-.service-select-info h4 {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #1c1917;
-}
-.service-select-info p {
-  font-size: 0.72rem;
-  color: #78716c;
-  margin-top: 2px;
-}
-.service-price-tag {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ea580c;
-  white-space: nowrap;
-}
+.service-select-card.active { border-color: #ea580c; background: #fffaf5; }
+.service-select-info h4 { font-size: 0.95rem; font-weight: 800; color: #1c1917; }
+.service-select-info p { font-size: 0.72rem; color: #78716c; margin-top: 2px; }
+.service-price-tag { font-size: 1.15rem; font-weight: 800; color: #ea580c; white-space: nowrap; }
 
-/* Estimate Summary Box (Step 5) */
+/* Summary (Step 5) */
 .estimate-summary-box {
   background: #faf6f0;
   border: 1px solid #ede7dc;
@@ -669,49 +683,152 @@ body {
   padding-top: 14px;
 }
 
-/* ── Dark Footer ── */
-.app-footer {
-  background: #181411;
-  color: #e7e5e4;
-  padding: 40px clamp(16px, 4vw, 40px) 24px;
-  margin-top: auto;
+/* ═══════════ VIEW 3: REWARDS & HUB ═══════════ */
+.hub-view-wrapper {
+  padding: 32px clamp(16px, 4vw, 40px);
+  max-width: 900px;
+  margin: 0 auto;
 }
-.footer-grid {
+.hub-balance-card {
+  background: linear-gradient(135deg, #181411 0%, #292524 100%);
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 26px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.balance-number { font-size: 2.2rem; font-weight: 800; color: #fbbf24; }
+.rewards-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
 }
-@media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
-
-.footer-col h4 {
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #fb923c;
-  margin-bottom: 14px;
+@media (max-width: 700px) { .rewards-grid { grid-template-columns: 1fr; } }
+.reward-item-card {
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
 }
-.footer-col p, .footer-col li {
-  font-size: 0.72rem;
-  color: #a8a29e;
-  line-height: 1.6;
-}
-.hours-table {
+.reward-btn {
   width: 100%;
-  font-size: 0.7rem;
-}
-.hours-table td { padding: 2px 0; }
-.hours-table td:last-child { text-align: right; color: #f5f5f4; }
-.perks-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(251, 146, 60, 0.3);
-  border-radius: 14px;
-  padding: 14px;
+  padding: 8px;
+  border-radius: 10px;
+  background: #ea580c;
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 0.72rem;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-/* ── Floating Demo Bar / Splash launcher ── */
+/* ═══════════ VIEW 4: SALON STAFF ADMIN PORTAL ═══════════ */
+.admin-view-wrapper {
+  padding: 32px clamp(16px, 4vw, 40px);
+}
+.admin-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+@media (max-width: 750px) { .admin-metrics-row { grid-template-columns: 1fr 1fr; } }
+.metric-tile {
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 16px;
+  padding: 16px;
+}
+.metric-val { font-size: 1.5rem; font-weight: 800; color: #ea580c; margin-top: 4px; }
+.bays-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+@media (max-width: 800px) { .bays-grid { grid-template-columns: 1fr; } }
+.bay-card {
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 18px;
+  padding: 16px;
+}
+.bay-status-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.bay-status-badge.in-bath { background: #dbeafe; color: #1e40af; }
+.bay-status-badge.fluffing { background: #fef3c7; color: #b45309; }
+.bay-status-badge.ready { background: #d1fae5; color: #065f46; }
+
+/* ── MODALS (Price Guide & Contact) ── */
+.app-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s;
+}
+.app-modal.open { opacity: 1; visibility: visible; }
+.modal-window {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+}
+.modal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+/* ── Interactive State Drawer / Demo Bar ── */
+.demo-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 95%;
+  max-width: 900px;
+  background: #181411;
+  color: #f5f5f4;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #ea580c;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+  padding: 16px 20px;
+  z-index: 120;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.demo-drawer.open { transform: translateX(-50%) translateY(0); }
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* ── Floating Tool Bar ── */
 .floating-tool-bar {
   position: fixed;
   bottom: 18px;
@@ -736,13 +853,12 @@ body {
 }
 .tool-btn:hover { background: #ea580c; color: #fff; }
 
-/* ── Fullscreen Splash Overlay ── */
+/* ── Splash Overlay ── */
 .splash-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: #000 url('assets/paws-claws-splash.jpg') center/contain no-repeat;
-  background-color: #0b1410;
+  background: #0b1410 url('assets/paws-claws-splash.jpg') center/cover no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -763,14 +879,48 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Footer */
+.app-footer {
+  background: #181411;
+  color: #e7e5e4;
+  padding: 40px clamp(16px, 4vw, 40px) 24px;
+  margin-top: auto;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+@media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer-col h4 {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fb923c;
+  margin-bottom: 14px;
+}
+.footer-col p, .footer-col li { font-size: 0.72rem; color: #a8a29e; line-height: 1.6; }
+.hours-table { width: 100%; font-size: 0.7rem; }
+.hours-table td { padding: 2px 0; }
+.hours-table td:last-child { text-align: right; color: #f5f5f4; }
+.perks-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+  border-radius: 14px;
+  padding: 14px;
+}
 </style>
 </head>
 <body>
 
 <!-- ═══════════ TOP SANDBOX CONTROLS ═══════════ -->
 <div class="demo-topbar">
-  <div class="demo-info">
-    <span class="demo-pill">✦ Live Portfolio Demo</span>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <span class="demo-pill">✦ Full Sandbox Application</span>
     <span style="font-size: 0.85rem; font-weight: 700; color: #f3f4f6;">Paws & Claws Luxury Pet Spa (Austin, TX)</span>
   </div>
 
@@ -788,9 +938,9 @@ body {
 <div class="app-stage">
   <div class="app-wrapper" id="appWrapper">
 
-    <!-- ── App Navbar ── -->
+    <!-- ── 1. App Navbar ── -->
     <header class="site-navbar">
-      <div class="brand-group">
+      <div class="brand-group" onclick="showAppView('spa-home')">
         <div class="brand-icon">🐶</div>
         <div class="brand-title-text">
           <h1>Paws & Claws Luxury Pet Spa <span class="spa-badge">✨ Spa</span></h1>
@@ -799,380 +949,535 @@ body {
       </div>
 
       <div class="nav-links">
-        <button class="btn-schedule-nav" onclick="goToStep(1)">📅 Schedule Grooming</button>
-        <span class="nav-link-item" onclick="alert('🎁 Paws & Perks Hub:\n\n• Current Points: 340 Paws\n• Reward Status: $15 credit available on 5th groom!')">👤 My Rewards & Hub</span>
-        <span class="nav-link-item" onclick="alert('📖 Price Guide:\n\n• Toy / Puppy (<20 lbs): $55+\n• Medium (20-50 lbs): $75+\n• Large (50-80 lbs): $95+\n• Giant (80+ lbs): $125+\n• Cat Suite: $85+')">❓ Price Guide</span>
-        <span class="nav-link-item" style="color:#ea580c; font-weight:700;">📞 (555) 382-7297</span>
-        <button class="btn-admin" onclick="alert('🛡️ Salon Staff Admin Portal:\n\n• 14 Grooming Bays Active\n• Daily Schedule: 28 appointments booked\n• Austin TX Location')">🛡️ Salon Staff Admin</button>
+        <button class="btn-nav-action" onclick="showAppView('wizard'); goToStep(1);">📅 Schedule Grooming</button>
+        <span class="nav-link-item" id="navItemHome" onclick="showAppView('spa-home')">✨ Spa Experience</span>
+        <span class="nav-link-item" id="navItemRewards" onclick="showAppView('rewards-hub')">👤 My Rewards & Hub</span>
+        <span class="nav-link-item" onclick="openModal('modalPriceGuide')">❓ Price Guide</span>
+        <span class="nav-link-item" onclick="openModal('modalContact')" style="color:#ea580c; font-weight:700;">📞 (555) 382-7297</span>
+        <button class="btn-admin" id="navItemAdmin" onclick="showAppView('admin')">🛡️ Salon Staff Admin</button>
       </div>
-
-      <button class="mobile-menu-btn" onclick="alert('Menu:\n\n• Schedule Grooming\n• My Rewards\n• Price Guide\n• Contact')">☰</button>
     </header>
 
-    <!-- ── Subheader Banner ── -->
+    <!-- ── 2. Subheader Banner ── -->
     <div class="top-notice-bar">
       <span>💖 Gentle, Fear-Free Luxury Grooming with 100% Love & Belly Rubs</span>
       <span>✨ $10 Deposit Locks in Slot • 24h Free Cancellation</span>
     </div>
 
-    <!-- ── Multi-step Booking Form Area ── -->
-    <div class="wizard-container">
-
-      <!-- Step 1: Pet Info -->
-      <div class="wizard-step-view active" id="step1">
-        <div class="step-eyebrow">🐾 ONLINE RESERVATION & INSTANT ESTIMATE</div>
-        <div class="step-title-header">
-          <h2>Step 1: Tell Us About Your Fur Baby</h2>
-          <button class="price-guide-badge-btn" onclick="alert('Transparent Pricing: Estimates calculate in real-time based on pet weight, coat condition, and gentle care handling.')">❓ Pricing Guide</button>
+    <!-- ──────────────── VIEW 1: SPA EXPERIENCE & CATALOG ──────────────── -->
+    <div class="app-view-container" id="viewSpaHome">
+      <section class="spa-hero">
+        <span class="hero-tag">🌿 Austin's Premier Fear-Free Pet Sanctuary</span>
+        <h2>Gentle Botanical Grooming<br>Tailored to Your Pet’s Comfort</h2>
+        <p>Zero stress, organic lavender chamomile bubble baths, blueberry facial scrubs, and individualized 1-on-1 pampering in our quiet Austin suites.</p>
+        <div class="hero-cta-group">
+          <button class="btn-nav-action" style="padding:14px 28px; font-size:0.9rem;" onclick="showAppView('wizard'); goToStep(1);">Schedule Instant Estimate ➔</button>
+          <button class="btn-nav-action secondary" style="padding:14px 24px; font-size:0.9rem;" onclick="openModal('modalPriceGuide')">Explore Transparent Pricing</button>
         </div>
+      </section>
 
-        <div class="steps-indicator">
-          <div class="step-tab-bar active" onclick="goToStep(1)"></div>
-          <div class="step-tab-bar" onclick="goToStep(2)"></div>
-          <div class="step-tab-bar" onclick="goToStep(3)"></div>
-          <div class="step-tab-bar" onclick="goToStep(4)"></div>
-          <div class="step-tab-bar" onclick="goToStep(5)"></div>
+      <section class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🫧</div>
+          <h3>Organic Botanical Baths</h3>
+          <p>Tearless blueberry scrubs, hypoallergenic chamomile mineral soaks, and shea butter paw pad restorations.</p>
         </div>
-        <div class="step-labels">
-          <span class="active">1. Pet Info 🐶</span>
-          <span>2. Service ✂️</span>
-          <span>3. Add-Ons ✨</span>
-          <span>4. Schedule 🗓️</span>
-          <span>5. Deposit 💳</span>
+        <div class="pillar-card">
+          <div class="pillar-icon">🤫</div>
+          <h3>Ultra-Quiet Dog & Cat Suites</h3>
+          <p>Separate low-noise feline sanctuaries and individualized appointments to prevent anxiety or sensory overload.</p>
         </div>
-
-        <div class="form-card" style="margin-top: 24px;">
-          <!-- Species -->
-          <label class="form-label">Pet Species</label>
-          <div class="species-grid">
-            <div class="species-card active" id="speciesDog" onclick="selectSpecies('dog')">
-              <div class="species-icon">🐕</div>
-              <div>
-                <div class="species-title">Dog / Canine 🐕</div>
-                <div class="species-desc">Puppies, Doodles, Double Coats & More</div>
-              </div>
-            </div>
-            <div class="species-card" id="speciesCat" onclick="selectSpecies('cat')">
-              <div class="species-icon">🐈</div>
-              <div>
-                <div class="species-title">Cat / Feline 🐈</div>
-                <div class="species-desc">Lion Cuts, Bath & Brush, Claws & Tidy</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Name & Breed -->
-          <div class="input-row">
-            <div class="form-group">
-              <label class="form-label">Pet Name *</label>
-              <input type="text" id="petNameInput" class="text-input" placeholder="e.g. Barnaby, Luna, Oliver, Peanut 🐾" value="Barnaby">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Breed / Mix</label>
-              <select id="breedSelect" class="select-input">
-                <option>Goldendoodle / Labradoodle 🐩</option>
-                <option>Golden Retriever 🦮</option>
-                <option>French Bulldog 🐾</option>
-                <option>Poodle (Standard / Miniature) 🐩</option>
-                <option>German Shepherd 🐕</option>
-                <option>Persian / Longhair Cat 🐈</option>
-                <option>Domestic Shorthair Cat 🐱</option>
-                <option>Other / Mixed Breed ✨</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Weight Slider -->
-          <div class="weight-slider-box">
-            <div class="weight-header">
-              <div>
-                <span class="form-label" style="margin-bottom:0;">Pet Weight (LBS)</span>
-                <span style="font-size: 0.68rem; color: #78716c;">Used for dynamic pricing and size-tier equipment planning</span>
-              </div>
-              <div style="display: flex; align-items: center;">
-                <span class="weight-val-badge" id="weightDisplay">35 lbs</span>
-                <span class="weight-tier-pill" id="tierDisplay">Medium (20–50 lbs)</span>
-              </div>
-            </div>
-            <input type="range" min="5" max="140" value="35" class="range-slider" id="weightSlider" oninput="updateWeight(this.value)">
-            <div class="range-scale">
-              <span>5 lbs (Toy / Puppy 🐶)</span>
-              <span>45 lbs (Medium 🐕)</span>
-              <span>140+ lbs (Giant Breed 🐕‍🦺)</span>
-            </div>
-          </div>
-
-          <!-- Coat Condition -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <label class="form-label" style="margin-bottom:0;">Coat Condition (Current State)</label>
-            <span style="font-size: 0.68rem; color: #ea580c; font-weight: 700; cursor: pointer;" onclick="alert('Coat Condition Guide:\n\n• Well-Maintained: Standard bath and clip\n• Moderate Tangles: +$15 for specialized brushout and detangling spray\n• Heavy Matting: +$30 for safety shave without tugging')">Why does this affect estimate?</span>
-          </div>
-
-          <div class="option-grid">
-            <div class="option-card active" onclick="selectCoat(this, 'Well-Maintained', 0)">
-              <div class="option-head">
-                <span class="option-title">✨ Well-Maintained</span>
-                <span class="option-fee">No extra fee</span>
-              </div>
-              <p class="option-desc">Brushed regularly, free of tangles or small knots.</p>
-            </div>
-
-            <div class="option-card" onclick="selectCoat(this, 'Moderate Tangles', 15)">
-              <div class="option-head">
-                <span class="option-title">🔵 Moderate Tangles</span>
-                <span class="option-fee extra">+$15 Detangle Care</span>
-              </div>
-              <p class="option-desc">Some knots around ears, legs, or dense undercoat.</p>
-            </div>
-
-            <div class="option-card" onclick="selectCoat(this, 'Heavy Matting', 30)">
-              <div class="option-head">
-                <span class="option-title">✂️ Heavy Matting / Felted</span>
-                <span class="option-fee extra">+$30 Safety Shave</span>
-              </div>
-              <p class="option-desc">Tight knots against skin, requires safety clipper work.</p>
-            </div>
-          </div>
-
-          <!-- Temperament & Behavior -->
-          <label class="form-label">Temperament & Behavior</label>
-          <div class="option-grid" style="grid-template-columns: repeat(4, 1fr);">
-            <div class="option-card active" onclick="selectTemperament(this, 'Friendly & Calm', 0)">
-              <span class="option-title">💚 Friendly & Calm</span>
-              <span class="option-desc" style="margin-top:4px;">Standard gentle pace</span>
-            </div>
-            <div class="option-card" onclick="selectTemperament(this, 'Anxious / Shy', 10)">
-              <span class="option-title">🧡 Anxious / Shy</span>
-              <span class="option-desc" style="color:#b45309; margin-top:4px;">+$10 Extra Time</span>
-            </div>
-            <div class="option-card" onclick="selectTemperament(this, 'Senior Care', 10)">
-              <span class="option-title">💜 Senior Care</span>
-              <span class="option-desc" style="color:#7c3aed; margin-top:4px;">+$10 Joint Support</span>
-            </div>
-            <div class="option-card" onclick="selectTemperament(this, '2 Stylists Assist', 25)">
-              <span class="option-title">❤️ 2 Stylists Assist</span>
-              <span class="option-desc" style="color:#dc2626; margin-top:4px;">+$25 Safety Assist</span>
-            </div>
-          </div>
-
-          <!-- Vaccine Verification -->
-          <div class="vaccine-box">
-            <div class="vaccine-head">🛡️ Rabies & Core Vaccination Verification</div>
-            <div class="vaccine-text">All pets must be current on rabies vaccination for salon safety and Texas state compliance.</div>
-            <label class="vaccine-checkbox-label">
-              <input type="checkbox" id="vaccineCheck" checked style="accent-color:#16a34a; width: 16px; height: 16px;">
-              <span>I confirm my pet is up-to-date on all required vaccines.</span>
-            </label>
-          </div>
-
-          <!-- Next Button -->
-          <div class="wizard-footer" style="justify-content: flex-end;">
-            <button class="btn-next-step" onclick="goToStep(2)">Next: Choose Package →</button>
-          </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📹</div>
+          <h3>Live Bay Status & Cameras</h3>
+          <p>Watch your fur baby get pampered in real time and receive digital grooming report cards at pickup.</p>
         </div>
-      </div>
-
-      <!-- Step 2: Choose Service -->
-      <div class="wizard-step-view" id="step2">
-        <div class="step-eyebrow">🐾 STEP 2 OF 5</div>
-        <div class="step-title-header">
-          <h2>Select Luxury Spa Package</h2>
-        </div>
-
-        <div class="steps-indicator">
-          <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
-          <div class="step-tab-bar active" onclick="goToStep(2)"></div>
-          <div class="step-tab-bar" onclick="goToStep(3)"></div>
-          <div class="step-tab-bar" onclick="goToStep(4)"></div>
-          <div class="step-tab-bar" onclick="goToStep(5)"></div>
-        </div>
-
-        <div class="form-card">
-          <div class="service-select-card active" onclick="selectService(this, 'The Royal Botanical Bubble Bath', 75)">
-            <div class="service-select-info">
-              <h4>🌸 The Royal Botanical Bubble Bath</h4>
-              <p>Warm mineral bath with lavender chamomile bubbles, ear cleanse, gland check, and warm hand fluff dry.</p>
-            </div>
-            <div class="service-price-tag">$75.00</div>
-          </div>
-
-          <div class="service-select-card" onclick="selectService(this, 'Blueberry Facial & Full Fluff Styling', 95)">
-            <div class="service-select-info">
-              <h4>🫐 Blueberry Facial & Full Fluff Breed Styling</h4>
-              <p>Tearless antioxidant facial scrub, paw pad massage balm, sanitary clip, and precision breed coat trim.</p>
-            </div>
-            <div class="service-price-tag">$95.00</div>
-          </div>
-
-          <div class="service-select-card" onclick="selectService(this, 'Fear-Free Gentle De-Shedding Herbal Treatment', 85)">
-            <div class="service-select-info">
-              <h4>☁️ Fear-Free Gentle De-Shedding Herbal Treatment</h4>
-              <p>Enriched botanical conditioner, high-velocity undercoat release, and 30-minute deep brushout.</p>
-            </div>
-            <div class="service-price-tag">$85.00</div>
-          </div>
-
-          <div class="wizard-footer" style="margin-top: 24px;">
-            <button class="btn-prev-step" onclick="goToStep(1)">← Back</button>
-            <button class="btn-next-step" onclick="goToStep(3)">Next: Luxury Add-Ons →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 3: Add-Ons -->
-      <div class="wizard-step-view" id="step3">
-        <div class="step-eyebrow">🐾 STEP 3 OF 5</div>
-        <div class="step-title-header">
-          <h2>Customize With Luxury Add-Ons</h2>
-        </div>
-
-        <div class="steps-indicator">
-          <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
-          <div class="step-tab-bar active" onclick="goToStep(3)"></div>
-          <div class="step-tab-bar" onclick="goToStep(4)"></div>
-          <div class="step-tab-bar" onclick="goToStep(5)"></div>
-        </div>
-
-        <div class="form-card">
-          <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <input type="checkbox" id="addonPaw" onchange="toggleAddon('Paw Balm', 10, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
-              <div>
-                <strong>🐾 Organic Shea Butter Paw Pad Salve</strong>
-                <p style="font-size:0.68rem; color:#78716c;">Moisturizes cracked pads and protects from hot Austin sidewalks</p>
-              </div>
-            </div>
-            <span style="font-weight:800; color:#ea580c;">+$10</span>
-          </label>
-
-          <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <input type="checkbox" id="addonTeeth" onchange="toggleAddon('Teeth Polish', 15, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
-              <div>
-                <strong>🦷 Enzymatic Teeth Polishing & Fresh Breath</strong>
-                <p style="font-size:0.68rem; color:#78716c;">Gentle plaque and tartar defense with organic peppermint gel</p>
-              </div>
-            </div>
-            <span style="font-weight:800; color:#ea580c;">+$15</span>
-          </label>
-
-          <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <input type="checkbox" id="addonFlea" onchange="toggleAddon('Herbal Flea', 15, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
-              <div>
-                <strong>🌿 Cedarwood & Lemongrass Flea Defense Rinse</strong>
-                <p style="font-size:0.68rem; color:#78716c;">100% all-natural botanical pesticide-free protection</p>
-              </div>
-            </div>
-            <span style="font-weight:800; color:#ea580c;">+$15</span>
-          </label>
-
-          <div class="wizard-footer" style="margin-top: 24px;">
-            <button class="btn-prev-step" onclick="goToStep(2)">← Back</button>
-            <button class="btn-next-step" onclick="goToStep(4)">Next: Select Date & Time →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 4: Schedule -->
-      <div class="wizard-step-view" id="step4">
-        <div class="step-eyebrow">🐾 STEP 4 OF 5</div>
-        <div class="step-title-header">
-          <h2>Choose Grooming Date & Stylist</h2>
-        </div>
-
-        <div class="steps-indicator">
-          <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(3)"></div>
-          <div class="step-tab-bar active" onclick="goToStep(4)"></div>
-          <div class="step-tab-bar" onclick="goToStep(5)"></div>
-        </div>
-
-        <div class="form-card">
-          <div class="input-row">
-            <div class="form-group">
-              <label class="form-label">Preferred Date</label>
-              <input type="date" class="text-input" value="2026-08-22">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Preferred Stylist</label>
-              <select class="select-input" id="stylistSelect">
-                <option>First Available Fear-Free Stylist ✨</option>
-                <option>Sarah Jenkins (Master Breed Specialist) ✂️</option>
-                <option>Marcus Vance (Gentle & Senior Specialist) 💜</option>
-                <option>Dr. Elena Rostova (Cat Sanctuary Lead) 🐱</option>
-              </select>
-            </div>
-          </div>
-
-          <label class="form-label">Available Time Slots (Austin Salon)</label>
-          <div class="option-grid" style="grid-template-columns: repeat(4, 1fr);">
-            <div class="option-card active" onclick="selectTime(this, '09:00 AM')"><span class="option-title">09:00 AM</span><span class="option-desc">Morning Bay 1</span></div>
-            <div class="option-card" onclick="selectTime(this, '11:30 AM')"><span class="option-title">11:30 AM</span><span class="option-desc">Morning Bay 3</span></div>
-            <div class="option-card" onclick="selectTime(this, '02:00 PM')"><span class="option-title">02:00 PM</span><span class="option-desc">Afternoon Bay 2</span></div>
-            <div class="option-card" onclick="selectTime(this, '04:15 PM')"><span class="option-title">04:15 PM</span><span class="option-desc">Sunset Bay 4</span></div>
-          </div>
-
-          <div class="wizard-footer" style="margin-top: 24px;">
-            <button class="btn-prev-step" onclick="goToStep(3)">← Back</button>
-            <button class="btn-next-step" onclick="goToStep(5)">Next: Review & Instant Estimate →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 5: Review & Deposit -->
-      <div class="wizard-step-view" id="step5">
-        <div class="step-eyebrow">🐾 STEP 5 OF 5</div>
-        <div class="step-title-header">
-          <h2>Reservation Review & Instant Estimate</h2>
-        </div>
-
-        <div class="steps-indicator">
-          <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(3)"></div>
-          <div class="step-tab-bar completed" onclick="goToStep(4)"></div>
-          <div class="step-tab-bar active" onclick="goToStep(5)"></div>
-        </div>
-
-        <div class="form-card">
-          <div class="estimate-summary-box">
-            <h4 style="font-size:0.95rem; font-weight:800; color:#1c1917; margin-bottom:12px;">📋 Appointment Estimate Breakdown</h4>
-            <div class="summary-line"><span>Pet:</span><strong id="sumPetName">Barnaby (Dog, 35 lbs - Medium)</strong></div>
-            <div class="summary-line"><span>Base Service:</span><span id="sumServiceName">The Royal Botanical Bubble Bath ($75.00)</span></div>
-            <div class="summary-line"><span>Coat Condition:</span><span id="sumCoat">Well-Maintained ($0.00)</span></div>
-            <div class="summary-line"><span>Handling / Temperament:</span><span id="sumTemp">Friendly & Calm ($0.00)</span></div>
-            <div class="summary-line"><span>Selected Add-Ons:</span><span id="sumAddons">None</span></div>
-            <div class="summary-line total"><span>Estimated Appointment Total:</span><span style="color:#ea580c;" id="sumTotal">$75.00</span></div>
-            <div style="font-size:0.7rem; color:#78716c; margin-top:8px;">* Includes 100% fear-free promise, organic botanical bubbles, and warm hand dry.</div>
-          </div>
-
-          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:14px; padding:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="font-size:0.85rem; color:#92400e;">Lock In Your Slot: $10 Reservation Deposit</strong>
-              <p style="font-size:0.68rem; color:#b45309; margin-top:2px;">Deducted from your final bill at salon pickup. 24h free cancellation.</p>
-            </div>
-            <span style="font-size:1.1rem; font-weight:800; color:#b45309;">$10.00</span>
-          </div>
-
-          <div id="bookingResult" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:18px; text-align:center; margin-bottom:20px;">
-            <div style="font-size:28px; margin-bottom:6px;">🎉</div>
-            <h4 style="font-size:1.1rem; font-weight:800; color:#166534;">Reservation Confirmed!</h4>
-            <p style="font-size:0.75rem; color:#15803d; margin-top:4px;">Booking ID #PC-Austin-9284. We can't wait to pamper your fur baby!</p>
-          </div>
-
-          <div class="wizard-footer">
-            <button class="btn-prev-step" onclick="goToStep(4)">← Back</button>
-            <button class="btn-next-step" id="confirmBtn" onclick="confirmAppointment()">Confirm Reservation with $10 Deposit ➔</button>
-          </div>
-        </div>
-      </div>
-
+      </section>
     </div>
 
-    <!-- ── Dark Footer ── -->
+    <!-- ──────────────── VIEW 2: 5-STEP SCHEDULING WIZARD ──────────────── -->
+    <div class="app-view-container active" id="viewWizard">
+      <div class="wizard-container">
+
+        <!-- Step 1: Pet Info -->
+        <div class="wizard-step-view active" id="step1">
+          <div class="step-eyebrow">🐾 ONLINE RESERVATION & INSTANT ESTIMATE</div>
+          <div class="step-title-header">
+            <h2>Step 1: Tell Us About Your Fur Baby</h2>
+            <button class="price-guide-badge-btn" onclick="openModal('modalPriceGuide')">❓ Pricing Guide</button>
+          </div>
+
+          <div class="steps-indicator">
+            <div class="step-tab-bar active" onclick="goToStep(1)"></div>
+            <div class="step-tab-bar" onclick="goToStep(2)"></div>
+            <div class="step-tab-bar" onclick="goToStep(3)"></div>
+            <div class="step-tab-bar" onclick="goToStep(4)"></div>
+            <div class="step-tab-bar" onclick="goToStep(5)"></div>
+          </div>
+          <div class="step-labels">
+            <span class="active">1. Pet Info 🐶</span>
+            <span>2. Service ✂️</span>
+            <span>3. Add-Ons ✨</span>
+            <span>4. Schedule 🗓️</span>
+            <span>5. Deposit 💳</span>
+          </div>
+
+          <div class="form-card" style="margin-top: 24px;">
+            <!-- Species Selection -->
+            <label class="form-label">Pet Species</label>
+            <div class="species-grid">
+              <div class="species-card active" id="speciesDog" onclick="selectSpecies('dog')">
+                <div class="species-icon">🐕</div>
+                <div>
+                  <div class="species-title">Dog / Canine 🐕</div>
+                  <div class="species-desc">Puppies, Doodles, Double Coats & More</div>
+                </div>
+              </div>
+              <div class="species-card" id="speciesCat" onclick="selectSpecies('cat')">
+                <div class="species-icon">🐈</div>
+                <div>
+                  <div class="species-title">Cat / Feline 🐈</div>
+                  <div class="species-desc">Lion Cuts, Bath & Brush, Claws & Tidy</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Name & Breed -->
+            <div class="input-row">
+              <div class="form-group">
+                <label class="form-label">Pet Name *</label>
+                <input type="text" id="petNameInput" class="text-input" placeholder="e.g. Barnaby, Luna, Oliver, Peanut 🐾" value="Barnaby">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Breed / Mix</label>
+                <select id="breedSelect" class="select-input">
+                  <option>Goldendoodle / Labradoodle 🐩</option>
+                  <option>Golden Retriever 🦮</option>
+                  <option>French Bulldog 🐾</option>
+                  <option>Poodle (Standard / Miniature) 🐩</option>
+                  <option>German Shepherd 🐕</option>
+                  <option>Persian / Longhair Cat 🐈</option>
+                  <option>Domestic Shorthair Cat 🐱</option>
+                  <option>Other / Mixed Breed ✨</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Weight Slider -->
+            <div class="weight-slider-box">
+              <div class="weight-header">
+                <div>
+                  <span class="form-label" style="margin-bottom:0;">Pet Weight (LBS)</span>
+                  <span style="font-size: 0.68rem; color: #78716c;">Used for dynamic pricing and size-tier equipment planning</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <span class="weight-val-badge" id="weightDisplay">35 lbs</span>
+                  <span class="weight-tier-pill" id="tierDisplay">Medium (20–50 lbs)</span>
+                </div>
+              </div>
+              <input type="range" min="5" max="140" value="35" class="range-slider" id="weightSlider" oninput="updateWeight(this.value)">
+              <div class="range-scale">
+                <span>5 lbs (Toy / Puppy 🐶)</span>
+                <span>45 lbs (Medium 🐕)</span>
+                <span>140+ lbs (Giant Breed 🐕‍🦺)</span>
+              </div>
+            </div>
+
+            <!-- Coat Condition -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <label class="form-label" style="margin-bottom:0;">Coat Condition (Current State)</label>
+              <span style="font-size: 0.68rem; color: #ea580c; font-weight: 700; cursor: pointer;" onclick="openModal('modalPriceGuide')">Why does this affect estimate?</span>
+            </div>
+
+            <div class="option-grid">
+              <div class="option-card active" onclick="selectCoat(this, 'Well-Maintained', 0)">
+                <div class="option-head">
+                  <span class="option-title">✨ Well-Maintained</span>
+                  <span class="option-fee">No extra fee</span>
+                </div>
+                <p class="option-desc">Brushed regularly, free of tangles or small knots.</p>
+              </div>
+
+              <div class="option-card" onclick="selectCoat(this, 'Moderate Tangles', 15)">
+                <div class="option-head">
+                  <span class="option-title">🔵 Moderate Tangles</span>
+                  <span class="option-fee extra">+$15 Detangle Care</span>
+                </div>
+                <p class="option-desc">Some knots around ears, legs, or dense undercoat.</p>
+              </div>
+
+              <div class="option-card" onclick="selectCoat(this, 'Heavy Matting', 30)">
+                <div class="option-head">
+                  <span class="option-title">✂️ Heavy Matting / Felted</span>
+                  <span class="option-fee extra">+$30 Safety Shave</span>
+                </div>
+                <p class="option-desc">Tight knots against skin, requires safety clipper work.</p>
+              </div>
+            </div>
+
+            <!-- Temperament & Behavior -->
+            <label class="form-label">Temperament & Behavior</label>
+            <div class="option-grid" style="grid-template-columns: repeat(4, 1fr);">
+              <div class="option-card active" onclick="selectTemperament(this, 'Friendly & Calm', 0)">
+                <span class="option-title">💚 Friendly & Calm</span>
+                <span class="option-desc" style="margin-top:4px;">Standard gentle pace</span>
+              </div>
+              <div class="option-card" onclick="selectTemperament(this, 'Anxious / Shy', 10)">
+                <span class="option-title">🧡 Anxious / Shy</span>
+                <span class="option-desc" style="color:#b45309; margin-top:4px;">+$10 Extra Time</span>
+              </div>
+              <div class="option-card" onclick="selectTemperament(this, 'Senior Care', 10)">
+                <span class="option-title">💜 Senior Care</span>
+                <span class="option-desc" style="color:#7c3aed; margin-top:4px;">+$10 Joint Support</span>
+              </div>
+              <div class="option-card" onclick="selectTemperament(this, '2 Stylists Assist', 25)">
+                <span class="option-title">❤️ 2 Stylists Assist</span>
+                <span class="option-desc" style="color:#dc2626; margin-top:4px;">+$25 Safety Assist</span>
+              </div>
+            </div>
+
+            <!-- Texas Rabies Callout -->
+            <div class="vaccine-box">
+              <div class="vaccine-head">🛡️ Rabies & Core Vaccination Verification</div>
+              <div class="vaccine-text">All pets must be current on rabies vaccination for salon safety and Texas state compliance.</div>
+              <label class="vaccine-checkbox-label">
+                <input type="checkbox" id="vaccineCheck" checked style="accent-color:#16a34a; width: 16px; height: 16px;">
+                <span>I confirm my pet is up-to-date on all required vaccines.</span>
+              </label>
+            </div>
+
+            <!-- Next Button -->
+            <div class="wizard-footer" style="justify-content: flex-end;">
+              <button class="btn-next-step" onclick="goToStep(2)">Next: Choose Package →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Choose Service -->
+        <div class="wizard-step-view" id="step2">
+          <div class="step-eyebrow">🐾 STEP 2 OF 5</div>
+          <div class="step-title-header">
+            <h2>Select Luxury Spa Package</h2>
+          </div>
+
+          <div class="steps-indicator">
+            <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
+            <div class="step-tab-bar active" onclick="goToStep(2)"></div>
+            <div class="step-tab-bar" onclick="goToStep(3)"></div>
+            <div class="step-tab-bar" onclick="goToStep(4)"></div>
+            <div class="step-tab-bar" onclick="goToStep(5)"></div>
+          </div>
+
+          <div class="form-card">
+            <div class="service-select-card active" onclick="selectService(this, 'The Royal Botanical Bubble Bath', 75)">
+              <div class="service-select-info">
+                <h4>🌸 The Royal Botanical Bubble Bath</h4>
+                <p>Warm mineral bath with lavender chamomile bubbles, ear cleanse, gland check, and warm hand fluff dry.</p>
+              </div>
+              <div class="service-price-tag" id="pricePkg1">$75.00</div>
+            </div>
+
+            <div class="service-select-card" onclick="selectService(this, 'Blueberry Facial & Full Fluff Styling', 95)">
+              <div class="service-select-info">
+                <h4>🫐 Blueberry Facial & Full Fluff Breed Styling</h4>
+                <p>Tearless antioxidant facial scrub, paw pad massage balm, sanitary clip, and precision breed coat trim.</p>
+              </div>
+              <div class="service-price-tag" id="pricePkg2">$95.00</div>
+            </div>
+
+            <div class="service-select-card" onclick="selectService(this, 'Fear-Free Gentle De-Shedding Herbal Treatment', 85)">
+              <div class="service-select-info">
+                <h4>☁️ Fear-Free Gentle De-Shedding Herbal Treatment</h4>
+                <p>Enriched botanical conditioner, high-velocity undercoat release, and 30-minute deep brushout.</p>
+              </div>
+              <div class="service-price-tag" id="pricePkg3">$85.00</div>
+            </div>
+
+            <div class="wizard-footer" style="margin-top: 24px;">
+              <button class="btn-prev-step" onclick="goToStep(1)">← Back</button>
+              <button class="btn-next-step" onclick="goToStep(3)">Next: Luxury Add-Ons →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Add-Ons -->
+        <div class="wizard-step-view" id="step3">
+          <div class="step-eyebrow">🐾 STEP 3 OF 5</div>
+          <div class="step-title-header">
+            <h2>Customize With Luxury Add-Ons</h2>
+          </div>
+
+          <div class="steps-indicator">
+            <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
+            <div class="step-tab-bar active" onclick="goToStep(3)"></div>
+            <div class="step-tab-bar" onclick="goToStep(4)"></div>
+            <div class="step-tab-bar" onclick="goToStep(5)"></div>
+          </div>
+
+          <div class="form-card">
+            <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="addonPaw" onchange="toggleAddon('Paw Balm', 10, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
+                <div>
+                  <strong>🐾 Organic Shea Butter Paw Pad Salve</strong>
+                  <p style="font-size:0.68rem; color:#78716c;">Moisturizes cracked pads and protects from hot Austin sidewalks</p>
+                </div>
+              </div>
+              <span style="font-weight:800; color:#ea580c;">+$10</span>
+            </label>
+
+            <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="addonTeeth" onchange="toggleAddon('Teeth Polish', 15, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
+                <div>
+                  <strong>🦷 Enzymatic Teeth Polishing & Fresh Breath</strong>
+                  <p style="font-size:0.68rem; color:#78716c;">Gentle plaque and tartar defense with organic peppermint gel</p>
+                </div>
+              </div>
+              <span style="font-weight:800; color:#ea580c;">+$15</span>
+            </label>
+
+            <label class="option-card" style="margin-bottom:12px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="addonFlea" onchange="toggleAddon('Herbal Flea', 15, this.checked)" style="accent-color:#ea580c; width:18px; height:18px;">
+                <div>
+                  <strong>🌿 Cedarwood & Lemongrass Flea Defense Rinse</strong>
+                  <p style="font-size:0.68rem; color:#78716c;">100% all-natural botanical pesticide-free protection</p>
+                </div>
+              </div>
+              <span style="font-weight:800; color:#ea580c;">+$15</span>
+            </label>
+
+            <div class="wizard-footer" style="margin-top: 24px;">
+              <button class="btn-prev-step" onclick="goToStep(2)">← Back</button>
+              <button class="btn-next-step" onclick="goToStep(4)">Next: Select Date & Time →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Schedule & Stylist -->
+        <div class="wizard-step-view" id="step4">
+          <div class="step-eyebrow">🐾 STEP 4 OF 5</div>
+          <div class="step-title-header">
+            <h2>Choose Grooming Date & Stylist</h2>
+          </div>
+
+          <div class="steps-indicator">
+            <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(3)"></div>
+            <div class="step-tab-bar active" onclick="goToStep(4)"></div>
+            <div class="step-tab-bar" onclick="goToStep(5)"></div>
+          </div>
+
+          <div class="form-card">
+            <div class="input-row">
+              <div class="form-group">
+                <label class="form-label">Preferred Date</label>
+                <input type="date" class="text-input" value="2026-08-22">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Preferred Stylist</label>
+                <select class="select-input" id="stylistSelect">
+                  <option>First Available Fear-Free Stylist ✨</option>
+                  <option>Sarah Jenkins (Master Breed Specialist) ✂️</option>
+                  <option>Marcus Vance (Gentle & Senior Specialist) 💜</option>
+                  <option>Dr. Elena Rostova (Cat Sanctuary Lead) 🐱</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="form-label">Available Time Slots (Austin Salon)</label>
+            <div class="option-grid" style="grid-template-columns: repeat(4, 1fr);">
+              <div class="option-card active" onclick="selectTime(this, '09:00 AM')"><span class="option-title">09:00 AM</span><span class="option-desc">Morning Bay 1</span></div>
+              <div class="option-card" onclick="selectTime(this, '11:30 AM')"><span class="option-title">11:30 AM</span><span class="option-desc">Morning Bay 3</span></div>
+              <div class="option-card" onclick="selectTime(this, '02:00 PM')"><span class="option-title">02:00 PM</span><span class="option-desc">Afternoon Bay 2</span></div>
+              <div class="option-card" onclick="selectTime(this, '04:15 PM')"><span class="option-title">04:15 PM</span><span class="option-desc">Sunset Bay 4</span></div>
+            </div>
+
+            <div class="wizard-footer" style="margin-top: 24px;">
+              <button class="btn-prev-step" onclick="goToStep(3)">← Back</button>
+              <button class="btn-next-step" onclick="goToStep(5)">Next: Review & Instant Estimate →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Review & Confirmation -->
+        <div class="wizard-step-view" id="step5">
+          <div class="step-eyebrow">🐾 STEP 5 OF 5</div>
+          <div class="step-title-header">
+            <h2>Reservation Review & Instant Estimate</h2>
+          </div>
+
+          <div class="steps-indicator">
+            <div class="step-tab-bar completed" onclick="goToStep(1)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(2)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(3)"></div>
+            <div class="step-tab-bar completed" onclick="goToStep(4)"></div>
+            <div class="step-tab-bar active" onclick="goToStep(5)"></div>
+          </div>
+
+          <div class="form-card">
+            <div class="estimate-summary-box">
+              <h4 style="font-size:0.95rem; font-weight:800; color:#1c1917; margin-bottom:12px;">📋 Appointment Estimate Breakdown</h4>
+              <div class="summary-line"><span>Pet:</span><strong id="sumPetName">Barnaby (Dog, 35 lbs - Medium)</strong></div>
+              <div class="summary-line"><span>Base Service:</span><span id="sumServiceName">The Royal Botanical Bubble Bath ($75.00)</span></div>
+              <div class="summary-line"><span>Coat Condition:</span><span id="sumCoat">Well-Maintained ($0.00)</span></div>
+              <div class="summary-line"><span>Handling / Temperament:</span><span id="sumTemp">Friendly & Calm ($0.00)</span></div>
+              <div class="summary-line"><span>Selected Add-Ons:</span><span id="sumAddons">None</span></div>
+              <div class="summary-line total"><span>Estimated Appointment Total:</span><span style="color:#ea580c;" id="sumTotal">$75.00</span></div>
+              <div style="font-size:0.7rem; color:#78716c; margin-top:8px;">* Includes 100% fear-free promise, organic botanical bubbles, and warm hand dry.</div>
+            </div>
+
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:14px; padding:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:0.85rem; color:#92400e;">Lock In Your Slot: $10 Reservation Deposit</strong>
+                <p style="font-size:0.68rem; color:#b45309; margin-top:2px;">Deducted from your final bill at salon pickup. 24h free cancellation.</p>
+              </div>
+              <span style="font-size:1.1rem; font-weight:800; color:#b45309;">$10.00</span>
+            </div>
+
+            <div id="bookingResult" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:18px; text-align:center; margin-bottom:20px;">
+              <div style="font-size:28px; margin-bottom:6px;">🎉</div>
+              <h4 style="font-size:1.1rem; font-weight:800; color:#166534;">Reservation Confirmed!</h4>
+              <p style="font-size:0.75rem; color:#15803d; margin-top:4px;">Booking ID #PC-Austin-9284. Added to Salon Admin Queue & your Rewards Hub!</p>
+            </div>
+
+            <div class="wizard-footer">
+              <button class="btn-prev-step" onclick="goToStep(4)">← Back</button>
+              <button class="btn-next-step" id="confirmBtn" onclick="confirmAppointment()">Confirm Reservation with $10 Deposit ➔</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ──────────────── VIEW 3: REWARDS & PET HUB ──────────────── -->
+    <div class="app-view-container" id="viewRewardsHub">
+      <div class="hub-view-wrapper">
+        <div class="hub-balance-card">
+          <div>
+            <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #fbbf24;">✨ Paws & Perks VIP Member</div>
+            <h3 style="font-size: 1.4rem; font-weight: 800; margin-top: 2px;">Matthew & Barnaby</h3>
+            <p style="font-size: 0.75rem; color: #d6d3d1; margin-top: 4px;">Earn 10 Paws for every $1 spent on grooming & organic boutique care.</p>
+          </div>
+          <div style="text-align: right;">
+            <div class="balance-number" id="hubPointsDisplay">340</div>
+            <div style="font-size: 0.7rem; color: #fde68a; font-weight: 700;">Available Paw Points</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: #181411; margin-bottom: 14px;">🎁 Redeem Available Rewards</h3>
+        <div class="rewards-grid">
+          <div class="reward-item-card">
+            <div style="font-size: 28px;">🐾</div>
+            <strong style="font-size: 0.85rem; display:block; margin-top: 4px;">Free Organic Paw Balm</strong>
+            <p style="font-size: 0.68rem; color: #78716c; margin-top: 2px;">100 Paw Points</p>
+            <button class="reward-btn" onclick="redeemReward('Free Paw Balm', 100)">Redeem Reward</button>
+          </div>
+
+          <div class="reward-item-card">
+            <div style="font-size: 28px;">🫐</div>
+            <strong style="font-size: 0.85rem; display:block; margin-top: 4px;">Free Blueberry Facial</strong>
+            <p style="font-size: 0.68rem; color: #78716c; margin-top: 2px;">200 Paw Points</p>
+            <button class="reward-btn" onclick="redeemReward('Free Blueberry Facial', 200)">Redeem Reward</button>
+          </div>
+
+          <div class="reward-item-card">
+            <div style="font-size: 28px;">💵</div>
+            <strong style="font-size: 0.85rem; display:block; margin-top: 4px;">$25 Full Service Credit</strong>
+            <p style="font-size: 0.68rem; color: #78716c; margin-top: 2px;">400 Paw Points (60 to go!)</p>
+            <button class="reward-btn" style="background:#78716c; cursor:not-allowed;" disabled>Locked (400 Pts)</button>
+          </div>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid #ede8e0; border-radius: 18px; padding: 20px; margin-bottom: 24px;">
+          <h4 style="font-size: 0.92rem; font-weight: 800; color: #181411; margin-bottom: 8px;">🔗 Share Your Referral Link</h4>
+          <p style="font-size: 0.72rem; color: #78716c;">Give your Austin friends <strong>$15 OFF</strong> their first spa visit and get <strong>$15 credit</strong> automatically.</p>
+          <div style="display: flex; gap: 8px; margin-top: 12px;">
+            <input type="text" class="text-input" value="https://pawsandclaws-spa.com/r/MATT-AUSTIN" readonly style="font-weight: 700; color: #ea580c;">
+            <button class="btn-nav-action" onclick="navigator.clipboard.writeText('https://pawsandclaws-spa.com/r/MATT-AUSTIN'); alert('Copied referral code to clipboard!');">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── VIEW 4: SALON STAFF ADMIN PORTAL ──────────────── -->
+    <div class="app-view-container" id="viewAdmin">
+      <div class="admin-view-wrapper">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #181411;">🛡️ Salon Staff Operations Hub</h2>
+            <p style="font-size: 0.72rem; color: #78716c;">Austin Central Salon · Active Shifts & Bay Monitor</p>
+          </div>
+          <span style="background: #d1fae5; color: #065f46; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 12px;">🟢 14 Bays Active</span>
+        </div>
+
+        <div class="admin-metrics-row">
+          <div class="metric-tile">
+            <span style="font-size: 0.68rem; font-weight: 700; color: #78716c; text-transform: uppercase;">Today's Grooms</span>
+            <div class="metric-val" id="adminBookingsCount">28</div>
+          </div>
+          <div class="metric-tile">
+            <span style="font-size: 0.68rem; font-weight: 700; color: #78716c; text-transform: uppercase;">Est. Revenue</span>
+            <div class="metric-val">$2,420</div>
+          </div>
+          <div class="metric-tile">
+            <span style="font-size: 0.68rem; font-weight: 700; color: #78716c; text-transform: uppercase;">Active Groomers</span>
+            <div class="metric-val">5 Staff</div>
+          </div>
+          <div class="metric-tile">
+            <span style="font-size: 0.68rem; font-weight: 700; color: #78716c; text-transform: uppercase;">On-Time Rate</span>
+            <div class="metric-val" style="color: #10b981;">98.4%</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #181411; margin-bottom: 14px;">🐾 Live Grooming Bays Status</h3>
+        <div class="bays-grid">
+          <div class="bay-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="font-size: 0.88rem;">Bay 1 · Hydrosurge Tub</strong>
+              <span class="bay-status-badge in-bath">🫧 In Bubble Bath</span>
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #1c1917;">Milo (Persian Cat)</div>
+            <div style="font-size: 0.68rem; color: #78716c;">Stylist: Sarah J. · Quiet Suite Mode</div>
+            <button class="btn-admin" style="width: 100%; margin-top: 10px;" onclick="alert('Moved Milo to Fluff Drying Stage.')">Advance to Dry ➔</button>
+          </div>
+
+          <div class="bay-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="font-size: 0.88rem;">Bay 2 · Styling Station</strong>
+              <span class="bay-status-badge fluffing">✂️ Precision Trim</span>
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #1c1917;">Barnaby (Goldendoodle)</div>
+            <div style="font-size: 0.68rem; color: #78716c;">Stylist: Marcus V. · Blueberry Facial</div>
+            <button class="btn-admin" style="width: 100%; margin-top: 10px;" onclick="alert('SMS Sent to Barnaby\'s owner for pickup!')">Mark Ready for Pickup 🔔</button>
+          </div>
+
+          <div class="bay-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="font-size: 0.88rem;">Bay 3 · Cat Sanctuary</strong>
+              <span class="bay-status-badge ready">✓ Ready for Pickup</span>
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 700; color: #1c1917;">Luna (Siamese)</div>
+            <div style="font-size: 0.68rem; color: #78716c;">Stylist: Dr. Elena · Lion Cut & Tidy</div>
+            <button class="btn-admin" style="width: 100%; margin-top: 10px; background:#10b981; color:#fff;" onclick="alert('Luna Checked Out! Digital Report Card Sent.')">Complete Checkout ✓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Mobile Bottom Navigation (Mobile Viewport) ── -->
+    <nav class="mobile-nav-bar">
+      <div class="mob-nav-item active" onclick="showAppView('wizard'); goToStep(1);"><span>📅</span><span>Book</span></div>
+      <div class="mob-nav-item" onclick="showAppView('spa-home');"><span>✨</span><span>Spa</span></div>
+      <div class="mob-nav-item" onclick="showAppView('rewards-hub');"><span>👤</span><span>Hub</span></div>
+      <div class="mob-nav-item" onclick="showAppView('admin');"><span>🛡️</span><span>Admin</span></div>
+    </nav>
+
+    <!-- ── App Footer ── -->
     <footer class="app-footer">
       <div class="footer-grid">
         <div class="footer-col">
@@ -1219,13 +1524,79 @@ body {
   </div>
 </div>
 
-<!-- ── Floating Demo Tools ── -->
-<div class="floating-tool-bar">
-  <button class="tool-btn" onclick="openSplash()">✨ Splash Screen</button>
-  <button class="tool-btn" onclick="alert('Demo Mode Tools:\n\n• Switch between Desktop & Mobile view at the top!\n• Fully interactive 5-step estimate calculator\n• Weight slider recalculates tiers dynamically')">👁️ Show Demo Bar</button>
+<!-- ═══════════ MODAL: PRICE GUIDE ═══════════ -->
+<div class="app-modal" id="modalPriceGuide">
+  <div class="modal-window">
+    <div class="modal-top">
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #181411;">📖 Transparent Spa Pricing Guide</h3>
+      <button onclick="closeModal('modalPriceGuide')" style="background:none; border:none; font-size:20px; cursor:pointer;">✕</button>
+    </div>
+    <p style="font-size: 0.75rem; color: #78716c; margin-bottom: 16px;">All packages include warm mineral bubble baths, ear cleanses, gland checks, and hand fluff drying.</p>
+    
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-bottom: 16px;">
+      <tr style="background:#faf6f0; font-weight:800; border-bottom:2px solid #ede8e0;">
+        <th style="padding:8px; text-align:left;">Weight Tier</th>
+        <th style="padding:8px; text-align:left;">Botanical Bath</th>
+        <th style="padding:8px; text-align:left;">Full Fluff & Trim</th>
+        <th style="padding:8px; text-align:left;">De-Shedding</th>
+      </tr>
+      <tr style="border-bottom:1px solid #ede8e0;"><td style="padding:8px;">Toy / Puppy (&lt;20 lbs)</td><td style="padding:8px;">$55</td><td style="padding:8px;">$75</td><td style="padding:8px;">$65</td></tr>
+      <tr style="border-bottom:1px solid #ede8e0;"><td style="padding:8px;">Medium (20–50 lbs)</td><td style="padding:8px;">$75</td><td style="padding:8px;">$95</td><td style="padding:8px;">$85</td></tr>
+      <tr style="border-bottom:1px solid #ede8e0;"><td style="padding:8px;">Large (50–85 lbs)</td><td style="padding:8px;">$95</td><td style="padding:8px;">$115</td><td style="padding:8px;">$105</td></tr>
+      <tr style="border-bottom:1px solid #ede8e0;"><td style="padding:8px;">Giant (85+ lbs)</td><td style="padding:8px;">$115</td><td style="padding:8px;">$145</td><td style="padding:8px;">$125</td></tr>
+      <tr><td style="padding:8px; font-weight:700;">Cat Sanctuary Suite 🐈</td><td style="padding:8px;">$75</td><td style="padding:8px;">$85 (Lion Cut)</td><td style="padding:8px;">$80</td></tr>
+    </table>
+
+    <button class="btn-nav-action" style="width:100%;" onclick="closeModal('modalPriceGuide'); showAppView('wizard');">Start Estimate Calculation ➔</button>
+  </div>
 </div>
 
-<!-- ── Fullscreen Splash Overlay ── -->
+<!-- ═══════════ MODAL: CONTACT & INQUIRY ═══════════ -->
+<div class="app-modal" id="modalContact">
+  <div class="modal-window">
+    <div class="modal-top">
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #181411;">📞 Contact Austin Salon</h3>
+      <button onclick="closeModal('modalContact')" style="background:none; border:none; font-size:20px; cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size: 0.75rem; color: #78716c; margin-bottom: 16px;">
+      📍 <strong>Austin Central Salon:</strong> 742 Whispering Pines Blvd, Suite 104, Austin, TX 78701<br>
+      📞 <strong>Phone:</strong> (555) 382-7297 • ✉️ <strong>Email:</strong> hello@pawsandclaws-spa.com
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">Your Name</label>
+      <input type="text" class="text-input" placeholder="Your Name" value="Matthew Solano">
+    </div>
+    <div class="form-group" style="margin-bottom:16px;">
+      <label class="form-label">Special Request or Medical Note</label>
+      <textarea class="text-input" rows="3" placeholder="Tell us if your pet needs extra quiet handling, senior joint care, or hypoallergenic shampoo..."></textarea>
+    </div>
+    <button class="btn-nav-action" style="width:100%;" onclick="alert('Inquiry sent to Paws & Claws Austin concierge!'); closeModal('modalContact');">Send Inquiry Message ➔</button>
+  </div>
+</div>
+
+<!-- ═══════════ DEMO DRAWER / STATE INSPECTOR ═══════════ -->
+<div class="demo-drawer" id="demoDrawer">
+  <div class="drawer-header">
+    <strong style="color: #fb923c; font-size: 0.85rem;">👁️ Live Sandbox State Inspector & Pre-fillers</strong>
+    <button onclick="toggleDemoDrawer()" style="background:none; border:none; color:#fff; cursor:pointer; font-size:16px;">✕</button>
+  </div>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+    <button class="tool-btn" onclick="presetForm('doodle')">⚡ Preset: Goldendoodle (35 lbs)</button>
+    <button class="tool-btn" onclick="presetForm('persian')">⚡ Preset: Persian Cat (Lion Cut)</button>
+    <button class="tool-btn" onclick="presetForm('senior')">⚡ Preset: Senior Dog (+Assist)</button>
+  </div>
+  <div style="font-size: 0.72rem; color: #a8a29e;">
+    State: Pet=<strong id="stPet" style="color:#fff;">Barnaby</strong> | Tier=<strong id="stTier" style="color:#fff;">Medium (35 lbs)</strong> | Est. Total=<strong id="stTotal" style="color:#fbbf24;">$75.00</strong>
+  </div>
+</div>
+
+<!-- ── Floating Tools ── -->
+<div class="floating-tool-bar">
+  <button class="tool-btn" onclick="openSplash()">✨ Splash Screen</button>
+  <button class="tool-btn" onclick="toggleDemoDrawer()">👁️ Show Demo Bar</button>
+</div>
+
+<!-- ── Splash Screen ── -->
 <div class="splash-overlay" id="splashOverlay">
   <button class="close-splash-btn" onclick="closeSplash()">✕ Close Splash Screen</button>
   <div style="text-align:center; color:#fff; padding-bottom:40px;">
@@ -1248,44 +1619,88 @@ let petState = {
   serviceName: 'The Royal Botanical Bubble Bath',
   servicePrice: 75,
   addons: {},
-  timeSlot: '09:00 AM'
+  timeSlot: '09:00 AM',
+  points: 340,
+  bookingsCount: 28
 };
+
+function showAppView(viewId) {
+  document.querySelectorAll('.app-view-container').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-link-item, .btn-admin').forEach(n => n.classList.remove('active'));
+
+  if (viewId === 'spa-home') {
+    document.getElementById('viewSpaHome').classList.add('active');
+    document.getElementById('navItemHome')?.classList.add('active');
+  } else if (viewId === 'wizard') {
+    document.getElementById('viewWizard').classList.add('active');
+  } else if (viewId === 'rewards-hub') {
+    document.getElementById('viewRewardsHub').classList.add('active');
+    document.getElementById('navItemRewards')?.classList.add('active');
+  } else if (viewId === 'admin') {
+    document.getElementById('viewAdmin').classList.add('active');
+    document.getElementById('navItemAdmin')?.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function selectSpecies(s) {
   petState.species = s;
   document.getElementById('speciesDog').classList.toggle('active', s === 'dog');
   document.getElementById('speciesCat').classList.toggle('active', s === 'cat');
+  recalcDynamicPricing();
 }
 
 function updateWeight(val) {
   petState.weight = parseInt(val);
   let tier = 'Medium (20–50 lbs)';
-  let baseMultiplier = 0;
   
   if (val < 20) {
     tier = 'Toy / Puppy (<20 lbs)';
-    baseMultiplier = -10;
   } else if (val <= 50) {
     tier = 'Medium (20–50 lbs)';
-    baseMultiplier = 0;
   } else if (val <= 85) {
     tier = 'Large (50–85 lbs)';
-    baseMultiplier = 20;
   } else {
     tier = 'Giant Breed (85+ lbs)';
-    baseMultiplier = 40;
   }
   
   petState.tier = tier;
   document.getElementById('weightDisplay').textContent = `${val} lbs`;
   document.getElementById('tierDisplay').textContent = tier;
+  recalcDynamicPricing();
+}
+
+function recalcDynamicPricing() {
+  let pkg1 = 75, pkg2 = 95, pkg3 = 85;
+  if (petState.weight < 20) {
+    pkg1 = 55; pkg2 = 75; pkg3 = 65;
+  } else if (petState.weight > 85) {
+    pkg1 = 115; pkg2 = 145; pkg3 = 125;
+  } else if (petState.weight > 50) {
+    pkg1 = 95; pkg2 = 115; pkg3 = 105;
+  }
+  
+  if (petState.species === 'cat') {
+    pkg1 = 75; pkg2 = 85; pkg3 = 80;
+  }
+
+  document.getElementById('pricePkg1').textContent = `$${pkg1}.00`;
+  document.getElementById('pricePkg2').textContent = `$${pkg2}.00`;
+  document.getElementById('pricePkg3').textContent = `$${pkg3}.00`;
+  
+  if (petState.serviceName.includes('Bubble Bath')) petState.servicePrice = pkg1;
+  else if (petState.serviceName.includes('Fluff')) petState.servicePrice = pkg2;
+  else petState.servicePrice = pkg3;
+  
+  updateDrawerState();
 }
 
 function selectCoat(el, name, fee) {
-  document.querySelectorAll('.option-grid:nth-of-type(1) .option-card').forEach(c => c.classList.remove('active', 'active-blue', 'active-red'));
+  document.querySelectorAll('.option-grid:nth-of-type(1) .option-card').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   petState.coat = name;
   petState.coatFee = fee;
+  updateDrawerState();
 }
 
 function selectTemperament(el, name, fee) {
@@ -1293,6 +1708,7 @@ function selectTemperament(el, name, fee) {
   el.classList.add('active');
   petState.temperament = name;
   petState.tempFee = fee;
+  updateDrawerState();
 }
 
 function selectService(el, name, price) {
@@ -1300,6 +1716,7 @@ function selectService(el, name, price) {
   el.classList.add('active');
   petState.serviceName = name;
   petState.servicePrice = price;
+  updateDrawerState();
 }
 
 function toggleAddon(name, fee, isChecked) {
@@ -1308,6 +1725,7 @@ function toggleAddon(name, fee, isChecked) {
   } else {
     delete petState.addons[name];
   }
+  updateDrawerState();
 }
 
 function selectTime(el, time) {
@@ -1320,11 +1738,7 @@ function goToStep(stepNumber) {
   document.querySelectorAll('.wizard-step-view').forEach(v => v.classList.remove('active'));
   document.getElementById(`step${stepNumber}`).classList.add('active');
   
-  // Calculate summary when going to step 5
-  if (stepNumber === 5) {
-    renderSummary();
-  }
-  
+  if (stepNumber === 5) renderSummary();
   window.scrollTo({ top: 100, behavior: 'smooth' });
 }
 
@@ -1347,12 +1761,23 @@ function renderSummary() {
   document.getElementById('sumTemp').textContent = `${petState.temperament} (+$${petState.tempFee.toFixed(2)})`;
   document.getElementById('sumAddons').textContent = addonList.length ? addonList.join(', ') : 'None';
   document.getElementById('sumTotal').textContent = `$${grandTotal.toFixed(2)}`;
+  updateDrawerState();
 }
 
 function confirmAppointment() {
   document.getElementById('bookingResult').style.display = 'block';
   document.getElementById('confirmBtn').textContent = '✓ Deposit Reserved';
   document.getElementById('confirmBtn').style.background = '#16a34a';
+  petState.bookingsCount++;
+  document.getElementById('adminBookingsCount').textContent = petState.bookingsCount;
+}
+
+function redeemReward(name, cost) {
+  if (petState.points >= cost) {
+    petState.points -= cost;
+    document.getElementById('hubPointsDisplay').textContent = petState.points;
+    alert(`🎉 Redeemed ${name}! 1-time reward voucher applied to your next appointment.`);
+  }
 }
 
 function setMode(mode) {
@@ -1371,11 +1796,47 @@ function setMode(mode) {
   }
 }
 
-function openSplash() {
-  document.getElementById('splashOverlay').classList.add('show');
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function openSplash() { document.getElementById('splashOverlay').classList.add('show'); }
+function closeSplash() { document.getElementById('splashOverlay').classList.remove('show'); }
+
+function toggleDemoDrawer() {
+  document.getElementById('demoDrawer').classList.toggle('open');
 }
-function closeSplash() {
-  document.getElementById('splashOverlay').classList.remove('show');
+
+function updateDrawerState() {
+  let addonTotal = 0;
+  for (let key in petState.addons) addonTotal += petState.addons[key];
+  const grandTotal = petState.servicePrice + petState.coatFee + petState.tempFee + addonTotal;
+  
+  document.getElementById('stPet').textContent = document.getElementById('petNameInput')?.value || 'Barnaby';
+  document.getElementById('stTier').textContent = `${petState.tier} (${petState.weight} lbs)`;
+  document.getElementById('stTotal').textContent = `$${grandTotal.toFixed(2)}`;
+}
+
+function presetForm(type) {
+  if (type === 'doodle') {
+    selectSpecies('dog');
+    document.getElementById('petNameInput').value = 'Barnaby';
+    document.getElementById('weightSlider').value = 35;
+    updateWeight(35);
+  } else if (type === 'persian') {
+    selectSpecies('cat');
+    document.getElementById('petNameInput').value = 'Milo';
+    document.getElementById('weightSlider').value = 9;
+    updateWeight(9);
+  } else if (type === 'senior') {
+    selectSpecies('dog');
+    document.getElementById('petNameInput').value = 'Cooper';
+    document.getElementById('weightSlider').value = 65;
+    updateWeight(65);
+    petState.temperament = 'Senior Care';
+    petState.tempFee = 10;
+  }
+  showAppView('wizard');
+  goToStep(1);
+  toggleDemoDrawer();
 }
 </script>
 </body>
