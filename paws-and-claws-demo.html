@@ -26,7 +26,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: var(--font-main);
-  background: #0f1412;
+  background: #0d1210;
   color: #f5f5f4;
   min-height: 100vh;
   display: flex;
@@ -40,14 +40,15 @@ body {
 /* ── Top Demo Sandbox Header ── */
 .demo-topbar {
   width: 100%;
-  background: #18201b;
-  border-bottom: 1px solid rgba(217, 119, 6, 0.2);
+  background: #141c18;
+  border-bottom: 1px solid rgba(217, 119, 6, 0.25);
   padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   z-index: 100;
+  flex-wrap: wrap;
 }
 .demo-pill {
   display: inline-flex;
@@ -78,6 +79,28 @@ body {
   align-items: center;
   gap: 10px;
 }
+.mode-toggle {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+}
+.mode-btn {
+  background: none;
+  border: none;
+  color: #a8a29e;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-btn.active {
+  background: #d97706;
+  color: #ffffff;
+}
 .demo-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -102,23 +125,32 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 16px;
+  padding: 24px 16px 40px;
   width: 100%;
 }
 
-.phone-mockup {
-  width: 390px;
-  height: 780px;
+.device-frame {
+  width: 395px;
+  height: 810px;
   background: #000000;
   border-radius: 46px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7), 0 0 0 10px #242b27, 0 0 0 12px #181d1a;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 0 0 0 10px #242b27, 0 0 0 12px #181d1a;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: width 0.4s ease, height 0.4s ease, border-radius 0.4s ease;
 }
 
-/* Dynamic Island / Notch */
+/* Desktop Web App Mode */
+.device-frame.web-mode {
+  width: 1050px;
+  height: 720px;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 8px #242b27;
+}
+
+/* Dynamic Island Notch (Mobile only) */
 .phone-notch {
   position: absolute;
   top: 10px;
@@ -128,32 +160,43 @@ body {
   height: 25px;
   background: #000000;
   border-radius: 20px;
-  z-index: 50;
+  z-index: 60;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
 }
+.device-frame.web-mode .phone-notch { display: none; }
 .camera-dot { width: 8px; height: 8px; background: #1c1c1e; border-radius: 50%; }
 
-/* Phone Screen Area */
-.screen-wrapper {
+/* Screen Area Layout */
+.screen-container {
   width: 100%;
   height: 100%;
   background: var(--bg-spa);
   color: var(--text-main);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Scrollable Content Wrapper */
+.screen-scroll-body {
+  flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-bottom: 24px;
   scroll-behavior: smooth;
 }
-.screen-wrapper::-webkit-scrollbar { display: none; }
+.screen-scroll-body::-webkit-scrollbar { width: 4px; }
+.screen-scroll-body::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
 
-/* ── SPLASH SCREEN (Initial state) ── */
+/* ── SPLASH SCREEN ── */
 .splash-view {
   position: absolute;
   inset: 0;
-  z-index: 40;
+  z-index: 80;
   background: #111a14 url('assets/paws-claws-splash.jpg') center/cover no-repeat;
   display: flex;
   flex-direction: column;
@@ -196,9 +239,7 @@ body {
   font-size: 11px;
 }
 
-.splash-mid {
-  text-align: center;
-}
+.splash-mid { text-align: center; }
 .splash-promise {
   display: inline-block;
   background: rgba(18, 18, 18, 0.6);
@@ -212,7 +253,7 @@ body {
 }
 
 .splash-bottom {
-  background: rgba(18, 18, 18, 0.85);
+  background: rgba(18, 18, 18, 0.88);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
@@ -232,7 +273,6 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   overflow: hidden;
-  position: relative;
 }
 .progress-bar-fill {
   height: 100%;
@@ -259,33 +299,16 @@ body {
   text-decoration: underline;
 }
 
-/* Floating Bubbles Effect */
-.bubble-particle {
-  position: absolute;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2) 60%, rgba(251, 191, 36, 0.4) 100%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: floatBubble 4s infinite ease-in-out;
-}
-@keyframes floatBubble {
-  0% { transform: translateY(0) scale(0.8); opacity: 0; }
-  50% { opacity: 0.8; }
-  100% { transform: translateY(-80px) scale(1.1); opacity: 0; }
-}
-
-/* ── MAIN APP SCREEN ── */
-.app-view {
-  padding-bottom: 75px;
-}
-
+/* ── HEADER ── */
 .app-header {
-  padding: 44px 18px 16px;
+  padding: 44px 18px 14px;
   background: #ffffff;
   border-bottom: 1px solid #f0ebe4;
   position: sticky;
   top: 0;
   z-index: 30;
 }
+.device-frame.web-mode .app-header { padding: 18px 24px; }
 .app-header-top {
   display: flex;
   align-items: center;
@@ -297,8 +320,8 @@ body {
   gap: 10px;
 }
 .app-logo-badge {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   background: #f59e0b;
   display: grid;
@@ -309,7 +332,7 @@ body {
 }
 .app-title-group h1 {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 700;
   color: #1c1917;
   line-height: 1.1;
@@ -322,21 +345,21 @@ body {
   text-transform: uppercase;
 }
 
-/* Pet Switcher Bar */
+/* ── PET SWITCHER ── */
 .pet-switcher {
-  padding: 14px 18px;
+  padding: 12px 18px;
   background: #faf6f0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   overflow-x: auto;
+  border-bottom: 1px solid #ede7dc;
 }
-.pet-switcher::-webkit-scrollbar { display: none; }
 .pet-chip {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   background: #ffffff;
   border: 1px solid #e7e0d6;
@@ -353,14 +376,14 @@ body {
   border-color: #1c1917;
 }
 
-/* Status Tracker Banner */
+/* ── STATUS CARD ── */
 .status-card {
   margin: 14px 18px;
-  background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+  background: linear-gradient(135deg, #1c1917 0%, #2b2520 100%);
   border-radius: 18px;
   padding: 14px 16px;
   color: #ffffff;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -389,21 +412,22 @@ body {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
   border: none;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 8px;
-  font-size: 0.64rem;
+  font-size: 0.65rem;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s;
 }
+.status-btn:hover { background: #d97706; }
 
-/* Category Quick Bar */
+/* ── CATEGORY BAR ── */
 .cat-scroll {
   display: flex;
   gap: 10px;
-  padding: 4px 18px 14px;
+  padding: 6px 18px 14px;
   overflow-x: auto;
 }
-.cat-scroll::-webkit-scrollbar { display: none; }
 .cat-item {
   display: flex;
   flex-direction: column;
@@ -423,9 +447,9 @@ body {
   font-size: 20px;
   transition: transform 0.2s, border-color 0.2s;
 }
-.cat-item:hover .cat-icon {
-  transform: translateY(-2px);
+.cat-item.active .cat-icon {
   border-color: #d97706;
+  background: #fef3c7;
 }
 .cat-label {
   font-size: 0.62rem;
@@ -434,7 +458,7 @@ body {
   text-align: center;
 }
 
-/* Spa Packages Grid */
+/* ── SERVICES LIST ── */
 .section-head {
   padding: 6px 18px 10px;
   display: flex;
@@ -458,6 +482,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.device-frame.web-mode .packages-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .service-card {
   background: #ffffff;
@@ -516,27 +544,165 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.book-btn:hover {
-  background: #d97706;
+.book-btn:hover { background: #d97706; }
+
+/* ── VIEW SWITCHING ARCHITECTURE ── */
+.app-page-view {
+  display: none;
+  animation: fadeInView 0.25s ease;
+}
+.app-page-view.active { display: block; }
+@keyframes fadeInView {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Interactive Booking Modal ── */
+/* ── SCHEDULE VIEW ── */
+.timeline-card {
+  margin: 14px 18px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #ede8e0;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+.timeline-step {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  padding-bottom: 18px;
+}
+.timeline-step:last-child { padding-bottom: 0; }
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: #ede8e0;
+}
+.timeline-step:last-child::before { display: none; }
+.step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f5f5f4;
+  border: 2px solid #d6d3d1;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  z-index: 2;
+}
+.timeline-step.done .step-dot {
+  background: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+.timeline-step.active .step-dot {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+.step-details h5 { font-size: 0.78rem; font-weight: 700; color: #1c1917; }
+.step-details p { font-size: 0.66rem; color: #78716c; margin-top: 1px; }
+
+/* ── MY PETS VIEW ── */
+.pet-card-profile {
+  margin: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.pet-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: #fef3c7;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  border: 2px solid #fde68a;
+  flex-shrink: 0;
+}
+.pet-details-col { flex: 1; }
+.pet-name-title { font-size: 0.92rem; font-weight: 800; color: #1c1917; }
+.pet-meta { font-size: 0.68rem; color: #78716c; margin-top: 2px; }
+.pet-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.badge-chip {
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: #f5f5f4;
+  color: #44403c;
+}
+.badge-chip.green { background: #d1fae5; color: #065f46; }
+
+/* ── BOUTIQUE VIEW ── */
+.boutique-grid {
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.device-frame.web-mode .boutique-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+.product-card {
+  background: #ffffff;
+  border: 1px solid #ede8e0;
+  border-radius: 16px;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product-img-box {
+  height: 75px;
+  background: #faf6f0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+.product-name { font-size: 0.72rem; font-weight: 700; color: #1c1917; }
+.product-price { font-size: 0.82rem; font-weight: 800; color: #d97706; margin: 4px 0 8px; }
+.add-bag-btn {
+  background: #1c1917;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── MODALS ── */
 .booking-modal {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(6px);
-  z-index: 60;
+  z-index: 90;
   display: flex;
   align-items: flex-end;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s;
 }
-.booking-modal.open {
-  opacity: 1;
-  visibility: visible;
-}
+.booking-modal.open { opacity: 1; visibility: visible; }
 .modal-sheet {
   width: 100%;
   background: #ffffff;
@@ -547,20 +713,14 @@ body {
   transform: translateY(100%);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.booking-modal.open .modal-sheet {
-  transform: translateY(0);
-}
+.booking-modal.open .modal-sheet { transform: translateY(0); }
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 16px;
 }
-.modal-title {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  color: #1c1917;
-}
+.modal-title { font-family: var(--font-serif); font-size: 1.15rem; color: #1c1917; }
 .modal-close {
   background: #f5f5f4;
   border: none;
@@ -570,8 +730,6 @@ body {
   cursor: pointer;
   font-weight: 700;
 }
-
-/* Add-ons Checklist */
 .addon-item {
   display: flex;
   align-items: center;
@@ -582,8 +740,6 @@ body {
   margin-bottom: 8px;
   cursor: pointer;
 }
-.addon-item input { margin-right: 8px; }
-
 .confirm-booking-btn {
   width: 100%;
   padding: 14px;
@@ -598,12 +754,7 @@ body {
   margin-top: 16px;
   cursor: pointer;
 }
-
-/* Confirmation Receipt */
-.receipt-card {
-  text-align: center;
-  padding: 20px 10px;
-}
+.receipt-card { text-align: center; padding: 20px 10px; }
 .receipt-icon {
   width: 50px;
   height: 50px;
@@ -616,20 +767,17 @@ body {
   margin: 0 auto 12px;
 }
 
-/* ── Bottom App Tab Bar ── */
+/* ── PINNED BOTTOM TAB BAR (Outside Scroll Area) ── */
 .app-nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
+  height: 62px;
   background: #ffffff;
   border-top: 1px solid #ede8e0;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  z-index: 35;
-  padding-bottom: 8px;
+  z-index: 50;
+  flex-shrink: 0;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.03);
 }
 .nav-tab {
   display: flex;
@@ -637,17 +785,23 @@ body {
   align-items: center;
   gap: 2px;
   color: #a8a29e;
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   font-weight: 600;
   cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 12px;
+  transition: all 0.2s;
 }
-.nav-tab.active { color: #d97706; }
-.nav-tab span.icon { font-size: 17px; }
+.nav-tab.active {
+  color: #d97706;
+  background: #fef3c7;
+}
+.nav-tab span.icon { font-size: 18px; }
 
 @media (max-width: 500px) {
-  .phone-mockup {
+  .device-frame {
     width: 100%;
-    height: 90vh;
+    height: 94vh;
     border-radius: 0;
     box-shadow: none;
   }
@@ -660,22 +814,28 @@ body {
 <div class="demo-topbar">
   <div class="demo-info">
     <span class="demo-pill">✦ Live Demo Sandbox</span>
-    <span class="demo-title">Paws & Claws Spa & Boutique (Mobile App Prototype)</span>
+    <span class="demo-title">Paws & Claws Spa & Boutique (Luxury Pet Grooming Prototype)</span>
   </div>
+
   <div class="demo-actions">
-    <button class="demo-btn" onclick="restartSplash()">Replay Splash Screen</button>
-    <a href="index.html" class="demo-btn">← Back to Portfolio</a>
+    <!-- Viewport Switcher -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="btnMobileMode" onclick="setDeviceMode('mobile')">📱 Mobile App</button>
+      <button class="mode-btn" id="btnWebMode" onclick="setDeviceMode('web')">💻 Web Dashboard</button>
+    </div>
+    <button class="demo-btn" onclick="restartSplash()">Replay Splash</button>
+    <a href="index.html" class="demo-btn">← Portfolio</a>
   </div>
 </div>
 
 <!-- ═══════════ DEVICE SIMULATOR ═══════════ -->
 <div class="demo-stage">
-  <div class="phone-mockup">
+  <div class="device-frame" id="deviceFrame">
     <div class="phone-notch"><div class="camera-dot"></div></div>
 
-    <div class="screen-wrapper" id="screenWrapper">
+    <div class="screen-container">
 
-      <!-- ── 1. SPLASH SCREEN ── -->
+      <!-- ── 1. SPLASH SCREEN OVERLAY ── -->
       <div class="splash-view" id="splashView">
         <div class="splash-top">
           <div class="splash-pill">
@@ -700,8 +860,10 @@ body {
         </div>
       </div>
 
-      <!-- ── 2. MAIN APP VIEW ── -->
-      <div class="app-view">
+      <!-- ── 2. SCROLLABLE SCREEN BODY ── -->
+      <div class="screen-scroll-body" id="scrollBody">
+        
+        <!-- App Header (Sticky) -->
         <header class="app-header">
           <div class="app-header-top">
             <div class="app-brand">
@@ -711,89 +873,248 @@ body {
                 <p>Luxury Gentle Grooming · Austin, TX</p>
               </div>
             </div>
-            <div style="font-size: 19px; cursor: pointer;">🔔</div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 0.72rem; font-weight: 700; color: #d97706; background: #fef3c7; padding: 4px 8px; border-radius: 12px;">🛍️ <span id="cartCount">0</span></span>
+              <span style="font-size: 19px; cursor: pointer;" onclick="alert('Notifications:\n\n• Milo is currently in Bay 3 for Botanical Bubble Rinse!\n• Rabies vaccine certificate approved 🟢')">🔔</span>
+            </div>
           </div>
         </header>
 
-        <!-- Pet Profile Bar -->
-        <div class="pet-switcher">
-          <div class="pet-chip active" onclick="switchPet(this, 'Bella', 'Golden Retriever')">🐶 Bella (Golden)</div>
-          <div class="pet-chip" onclick="switchPet(this, 'Milo', 'Persian Cat')">🐱 Milo (Persian)</div>
-          <div class="pet-chip" onclick="alert('Demo Mode: In the full app, you can add multiple pets with vaccination and grooming notes.')">➕ Add Pet</div>
-        </div>
-
-        <!-- Live Care Status Card -->
-        <div class="status-card">
-          <div class="status-left">
-            <div class="status-pulse"></div>
-            <div class="status-text">
-              <h4 id="statusPetName">Milo's Appointment Today</h4>
-              <p>🫧 In Botanical Bubble Rinse (Bay 3)</p>
-            </div>
-          </div>
-          <button class="status-btn" onclick="openLiveCam()">Live Cam 📹</button>
-        </div>
-
-        <!-- Category Scroll -->
-        <div class="cat-scroll">
-          <div class="cat-item" onclick="filterCategory('All')"><div class="cat-icon">✨</div><span class="cat-label">All Spa</span></div>
-          <div class="cat-item" onclick="filterCategory('Bath')"><div class="cat-icon">🫧</div><span class="cat-label">Baths</span></div>
-          <div class="cat-item" onclick="filterCategory('Facial')"><div class="cat-icon">🫐</div><span class="cat-label">Facials</span></div>
-          <div class="cat-item" onclick="filterCategory('Haircut')"><div class="cat-icon">✂️</div><span class="cat-label">Styling</span></div>
-          <div class="cat-item" onclick="filterCategory('Cat')"><div class="cat-icon">🐱</div><span class="cat-label">Cat Spa</span></div>
-        </div>
-
-        <!-- Spa Packages List -->
-        <div class="section-head">
-          <h3>Featured Spa Experiences</h3>
-          <span>View All (12)</span>
-        </div>
-
-        <div class="packages-col">
-          <div class="service-card">
-            <div class="service-info">
-              <span class="service-tag">Signature Spa</span>
-              <div class="service-name">The Royal Botanical Bubble Bath</div>
-              <div class="service-desc">Warm mineral bath with lavender chamomile bubbles, ear cleanse, and warm fluff dry.</div>
-              <div class="service-price">$75.00</div>
-            </div>
-            <button class="book-btn" onclick="openBooking('The Royal Botanical Bubble Bath', 75)">Book</button>
+        <!-- ──────────────── VIEW 1: HOME ──────────────── -->
+        <div class="app-page-view active" id="viewHome">
+          <!-- Pet Switcher -->
+          <div class="pet-switcher">
+            <div class="pet-chip active" onclick="switchPet(this, 'Bella', 'Golden Retriever')">🐶 Bella (Golden)</div>
+            <div class="pet-chip" onclick="switchPet(this, 'Milo', 'Persian Cat')">🐱 Milo (Persian)</div>
+            <div class="pet-chip" onclick="openAddPetModal()">➕ Add Pet</div>
           </div>
 
-          <div class="service-card">
-            <div class="service-info">
-              <span class="service-tag">Popular</span>
-              <div class="service-name">Blueberry Facial & Full Fluff Styling</div>
-              <div class="service-desc">Tearless antioxidant facial scrub, paw pad massage balm, and precision breed coat trim.</div>
-              <div class="service-price">$95.00</div>
+          <!-- Status Card -->
+          <div class="status-card">
+            <div class="status-left">
+              <div class="status-pulse"></div>
+              <div class="status-text">
+                <h4 id="statusPetName">Milo's Appointment Today</h4>
+                <p>🫧 In Botanical Bubble Rinse (Bay 3)</p>
+              </div>
             </div>
-            <button class="book-btn" onclick="openBooking('Blueberry Facial & Full Fluff Styling', 95)">Book</button>
+            <button class="status-btn" onclick="switchTab('schedule')">Track Live 📹</button>
           </div>
 
-          <div class="service-card">
-            <div class="service-info">
-              <span class="service-tag">Fear-Free</span>
-              <div class="service-name">Gentle De-Shedding Herbal Treatment</div>
-              <div class="service-desc">Enriched botanical conditioner, high-velocity undercoat release, and deep brushout.</div>
-              <div class="service-price">$80.00</div>
-            </div>
-            <button class="book-btn" onclick="openBooking('Gentle De-Shedding Herbal Treatment', 80)">Book</button>
+          <!-- Category Quick Bar -->
+          <div class="cat-scroll">
+            <div class="cat-item active" onclick="filterCategory(this, 'All')"><div class="cat-icon">✨</div><span class="cat-label">All Spa</span></div>
+            <div class="cat-item" onclick="filterCategory(this, 'Baths')"><div class="cat-icon">🫧</div><span class="cat-label">Baths</span></div>
+            <div class="cat-item" onclick="filterCategory(this, 'Facials')"><div class="cat-icon">🫐</div><span class="cat-label">Facials</span></div>
+            <div class="cat-item" onclick="filterCategory(this, 'Styling')"><div class="cat-icon">✂️</div><span class="cat-label">Styling</span></div>
+            <div class="cat-item" onclick="filterCategory(this, 'Cats')"><div class="cat-icon">🐱</div><span class="cat-label">Cat Suite</span></div>
           </div>
 
-          <div class="service-card">
-            <div class="service-info">
-              <span class="service-tag">Cat Suite</span>
-              <div class="service-name">Purrfect Pampering & Lion Trim</div>
-              <div class="service-desc">Ultra-quiet, dog-free cat sanctuary bath, sanitary trim, nail buffing, and catnip treat.</div>
-              <div class="service-price">$85.00</div>
+          <!-- Spa Packages -->
+          <div class="section-head">
+            <h3>Featured Spa Experiences</h3>
+            <span onclick="alert('Viewing full 12-package catalog.')">View All (12)</span>
+          </div>
+
+          <div class="packages-col">
+            <div class="service-card">
+              <div class="service-info">
+                <span class="service-tag">Signature Spa</span>
+                <div class="service-name">The Royal Botanical Bubble Bath</div>
+                <div class="service-desc">Warm mineral bath with lavender chamomile bubbles, ear cleanse, and warm fluff dry.</div>
+                <div class="service-price">$75.00</div>
+              </div>
+              <button class="book-btn" onclick="openBooking('The Royal Botanical Bubble Bath', 75)">Book</button>
             </div>
-            <button class="book-btn" onclick="openBooking('Purrfect Pampering & Lion Trim', 85)">Book</button>
+
+            <div class="service-card">
+              <div class="service-info">
+                <span class="service-tag">Popular</span>
+                <div class="service-name">Blueberry Facial & Full Fluff Styling</div>
+                <div class="service-desc">Tearless antioxidant facial scrub, paw pad massage balm, and precision breed coat trim.</div>
+                <div class="service-price">$95.00</div>
+              </div>
+              <button class="book-btn" onclick="openBooking('Blueberry Facial & Full Fluff Styling', 95)">Book</button>
+            </div>
+
+            <div class="service-card">
+              <div class="service-info">
+                <span class="service-tag">Fear-Free</span>
+                <div class="service-name">Gentle De-Shedding Herbal Treatment</div>
+                <div class="service-desc">Enriched botanical conditioner, high-velocity undercoat release, and deep brushout.</div>
+                <div class="service-price">$80.00</div>
+              </div>
+              <button class="book-btn" onclick="openBooking('Gentle De-Shedding Herbal Treatment', 80)">Book</button>
+            </div>
+
+            <div class="service-card">
+              <div class="service-info">
+                <span class="service-tag">Cat Suite</span>
+                <div class="service-name">Purrfect Pampering & Lion Trim</div>
+                <div class="service-desc">Ultra-quiet, dog-free cat sanctuary bath, sanitary trim, nail buffing, and catnip treat.</div>
+                <div class="service-price">$85.00</div>
+              </div>
+              <button class="book-btn" onclick="openBooking('Purrfect Pampering & Lion Trim', 85)">Book</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────── VIEW 2: SCHEDULE / APPOINTMENTS ──────────────── -->
+        <div class="app-page-view" id="viewSchedule">
+          <div class="section-head" style="margin-top: 10px;">
+            <h3>Active Grooming Timeline</h3>
+            <span style="color: #10b981;">🟢 Live In-Progress</span>
+          </div>
+
+          <div class="timeline-card">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
+              <div>
+                <strong style="font-size: 0.88rem; color: #1c1917;">🐱 Milo · Persian Cat</strong>
+                <p style="font-size: 0.66rem; color: #78716c;">Purrfect Pampering & Lion Trim</p>
+              </div>
+              <span style="font-size: 0.65rem; font-weight: 700; background: #fef3c7; color: #b45309; padding: 3px 8px; border-radius: 8px;">Bay 3 (Quiet Suite)</span>
+            </div>
+
+            <div class="timeline-step done">
+              <div class="step-dot">✓</div>
+              <div class="step-details">
+                <h5>1:30 PM — Check-in & Wellness Check</h5>
+                <p>Weight 9.2 lbs · Calming pheromone spray applied</p>
+              </div>
+            </div>
+
+            <div class="timeline-step done">
+              <div class="step-dot">✓</div>
+              <div class="step-details">
+                <h5>1:45 PM — Warm Botanical Bubble Soak</h5>
+                <p>Hypoallergenic oatmeal & chamomile rinse completed</p>
+              </div>
+            </div>
+
+            <div class="timeline-step active">
+              <div class="step-dot">🫧</div>
+              <div class="step-details">
+                <h5>2:15 PM — Blueberry Facial & Sanitary Trim (Current)</h5>
+                <p>Gentle face scrub & coat detangling underway</p>
+              </div>
+            </div>
+
+            <div class="timeline-step">
+              <div class="step-dot">4</div>
+              <div class="step-details">
+                <h5>2:45 PM — Warm Air Fluff & Bandana Fitting</h5>
+                <p>Hand drying with lavender finishing mist</p>
+              </div>
+            </div>
+
+            <div class="timeline-step">
+              <div class="step-dot">5</div>
+              <div class="step-details">
+                <h5>3:00 PM — Ready for Pickup Notification</h5>
+                <p>Digital report card will be sent to your phone</p>
+              </div>
+            </div>
+
+            <button class="book-btn" style="width: 100%; margin-top: 14px; padding: 10px;" onclick="alert('📹 Live Grooming Bay Cam:\n\nMilo is calm and enjoying his blueberry scrub with Stylist Sarah.')">View Live Cam Feed 📹</button>
+          </div>
+
+          <div class="section-head">
+            <h3>Upcoming Appointments</h3>
+          </div>
+          <div class="packages-col">
+            <div class="service-card">
+              <div class="service-info">
+                <span class="service-tag">Next Week</span>
+                <div class="service-name">🐶 Bella — Royal Botanical Bath</div>
+                <div class="service-desc">Friday, August 28 @ 10:00 AM · Stylist Marcus</div>
+                <div class="service-price">$75.00</div>
+              </div>
+              <button class="book-btn" style="background:#44403c;" onclick="alert('Appointment options: Reschedule or Add Special Notes.')">Manage</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────── VIEW 3: MY PETS ──────────────── -->
+        <div class="app-page-view" id="viewPets">
+          <div class="section-head" style="margin-top: 10px;">
+            <h3>Registered Pet Profiles</h3>
+            <span onclick="openAddPetModal()">+ Add New Pet</span>
+          </div>
+
+          <div class="pet-card-profile">
+            <div class="pet-avatar">🐶</div>
+            <div class="pet-details-col">
+              <div class="pet-name-title">Bella</div>
+              <div class="pet-meta">Golden Retriever · 3 Yrs · 62 lbs</div>
+              <div class="pet-badges">
+                <span class="badge-chip green">✓ Rabies Verified</span>
+                <span class="badge-chip">Loves Belly Rubs</span>
+                <span class="badge-chip">Warm Fluff Dry</span>
+              </div>
+            </div>
+            <button class="book-btn" style="padding: 6px 10px; font-size: 0.65rem;" onclick="openBooking('The Royal Botanical Bubble Bath', 75)">Book</button>
+          </div>
+
+          <div class="pet-card-profile">
+            <div class="pet-avatar">🐱</div>
+            <div class="pet-details-col">
+              <div class="pet-name-title">Milo</div>
+              <div class="pet-meta">Persian Cat · 2 Yrs · 9.2 lbs</div>
+              <div class="pet-badges">
+                <span class="badge-chip green">✓ Vaccines Current</span>
+                <span class="badge-chip">Dog-Free Quiet Suite</span>
+                <span class="badge-chip">Lion Cut</span>
+              </div>
+            </div>
+            <button class="book-btn" style="padding: 6px 10px; font-size: 0.65rem;" onclick="openBooking('Purrfect Pampering & Lion Trim', 85)">Book</button>
+          </div>
+
+          <div style="padding: 10px 18px;">
+            <button class="confirm-booking-btn" style="margin: 0; background: #1c1917;" onclick="openAddPetModal()">➕ Add Another Pet Profile</button>
+          </div>
+        </div>
+
+        <!-- ──────────────── VIEW 4: BOUTIQUE ──────────────── -->
+        <div class="app-page-view" id="viewBoutique">
+          <div class="section-head" style="margin-top: 10px;">
+            <h3>Organic Spa Boutique</h3>
+            <span>Austin Pick-up / Delivery</span>
+          </div>
+
+          <div class="boutique-grid">
+            <div class="product-card">
+              <div class="product-img-box">🧴</div>
+              <div class="product-name">Chamomile Botanical Bubble Bath</div>
+              <div class="product-price">$24.00</div>
+              <button class="add-bag-btn" onclick="addToBag('Chamomile Bubble Bath', 24)">+ Add to Bag</button>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">🫐</div>
+              <div class="product-name">Tearless Blueberry Facial Scrub</div>
+              <div class="product-price">$18.00</div>
+              <button class="add-bag-btn" onclick="addToBag('Blueberry Facial Scrub', 18)">+ Add to Bag</button>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">🐾</div>
+              <div class="product-name">Organic Lavender Paw Pad Salve</div>
+              <div class="product-price">$14.00</div>
+              <button class="add-bag-btn" onclick="addToBag('Lavender Paw Salve', 14)">+ Add to Bag</button>
+            </div>
+
+            <div class="product-card">
+              <div class="product-img-box">🎀</div>
+              <div class="product-name">Silk Austin Bandana (Floral Gold)</div>
+              <div class="product-price">$16.00</div>
+              <button class="add-bag-btn" onclick="addToBag('Austin Silk Bandana', 16)">+ Add to Bag</button>
+            </div>
           </div>
         </div>
 
       </div>
 
-      <!-- ── 3. INTERACTIVE BOOKING MODAL SHEET ── -->
+      <!-- ── 3. BOOKING MODAL ── -->
       <div class="booking-modal" id="bookingModal">
         <div class="modal-sheet">
           <div class="modal-header">
@@ -839,12 +1160,12 @@ body {
         </div>
       </div>
 
-      <!-- ── BOTTOM TAB NAVIGATION ── -->
+      <!-- ── 4. PINNED BOTTOM TAB BAR ── -->
       <nav class="app-nav">
-        <div class="nav-tab active"><span class="icon">🏠</span><span>Home</span></div>
-        <div class="nav-tab" onclick="alert('Appointments Tab: View active grooming status and past receipts.')"><span class="icon">📅</span><span>Schedule</span></div>
-        <div class="nav-tab" onclick="alert('Pets Tab: Manage pet profiles, breed info, and rabies certificates.')"><span class="icon">🐾</span><span>My Pets</span></div>
-        <div class="nav-tab" onclick="alert('Shop Tab: Browse organic shampoos, bandanas, and treats.')"><span class="icon">🛍️</span><span>Boutique</span></div>
+        <div class="nav-tab active" id="tabHome" onclick="switchTab('home')"><span class="icon">🏠</span><span>Home</span></div>
+        <div class="nav-tab" id="tabSchedule" onclick="switchTab('schedule')"><span class="icon">📅</span><span>Schedule</span></div>
+        <div class="nav-tab" id="tabPets" onclick="switchTab('pets')"><span class="icon">🐾</span><span>My Pets</span></div>
+        <div class="nav-tab" id="tabBoutique" onclick="switchTab('boutique')"><span class="icon">🛍️</span><span>Boutique</span></div>
       </nav>
 
     </div>
@@ -854,8 +1175,9 @@ body {
 <script>
 let currentSelectedPet = "Bella";
 let currentBasePrice = 75;
+let cartItemsCount = 0;
 
-// Animate Splash Loading Progress
+// Splash Animation
 function startSplashAnimation() {
   const fill = document.getElementById('progressFill');
   const splash = document.getElementById('splashView');
@@ -884,6 +1206,46 @@ function restartSplash() {
   startSplashAnimation();
 }
 
+// Tab Switching
+function switchTab(tabName) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.app-page-view').forEach(v => v.classList.remove('active'));
+  
+  if (tabName === 'home') {
+    document.getElementById('tabHome').classList.add('active');
+    document.getElementById('viewHome').classList.add('active');
+  } else if (tabName === 'schedule') {
+    document.getElementById('tabSchedule').classList.add('active');
+    document.getElementById('viewSchedule').classList.add('active');
+  } else if (tabName === 'pets') {
+    document.getElementById('tabPets').classList.add('active');
+    document.getElementById('viewPets').classList.add('active');
+  } else if (tabName === 'boutique') {
+    document.getElementById('tabBoutique').classList.add('active');
+    document.getElementById('viewBoutique').classList.add('active');
+  }
+  
+  // Scroll to top of view
+  document.getElementById('scrollBody').scrollTop = 0;
+}
+
+// Device Mode Switcher (Mobile vs Web)
+function setDeviceMode(mode) {
+  const frame = document.getElementById('deviceFrame');
+  const btnMob = document.getElementById('btnMobileMode');
+  const btnWeb = document.getElementById('btnWebMode');
+
+  if (mode === 'web') {
+    frame.classList.add('web-mode');
+    btnWeb.classList.add('active');
+    btnMob.classList.remove('active');
+  } else {
+    frame.classList.remove('web-mode');
+    btnMob.classList.add('active');
+    btnWeb.classList.remove('active');
+  }
+}
+
 function switchPet(el, name, breed) {
   document.querySelectorAll('.pet-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -891,12 +1253,23 @@ function switchPet(el, name, breed) {
   document.getElementById('statusPetName').textContent = `${name}'s Grooming Profile`;
 }
 
-function openLiveCam() {
-  alert("Live Spa Cam 📹\n\nDemo Mode: In production, clients can view live video of their pet's gentle grooming session in real-time!");
+function filterCategory(el, cat) {
+  document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
 }
 
-function filterCategory(cat) {
-  alert(`Category Selected: ${cat}\n\nDemo Mode: Filters the spa menu dynamically.`);
+function openAddPetModal() {
+  const petName = prompt("Enter Pet Name (e.g. Daisy, Luna, Charlie):", "Daisy");
+  if (petName) {
+    alert(`🐾 Profile Created for ${petName}!\n\nAdded to your Paws & Claws demo account with Fear-Free gentle grooming preferences.`);
+    switchTab('pets');
+  }
+}
+
+function addToBag(productName, price) {
+  cartItemsCount++;
+  document.getElementById('cartCount').textContent = cartItemsCount;
+  alert(`🛍️ Added ${productName} ($${price}.00) to your Spa Bag!`);
 }
 
 function openBooking(serviceName, price) {
@@ -919,7 +1292,6 @@ function completeBooking() {
   document.getElementById('receiptService').textContent = document.getElementById('modalServiceTitle').textContent;
 }
 
-// Initial start
 startSplashAnimation();
 </script>
 </body>
